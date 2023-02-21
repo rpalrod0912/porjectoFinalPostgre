@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=farra
+      - POSTGRES_PASSWORD=farra
+      - POSTGRES_DB=farraDB
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "farra@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "farra"
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
