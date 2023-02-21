@@ -55,12 +55,12 @@ public class Product implements Serializable {
     private String sexo;
 
     @ElementCollection
-    @CollectionTable(name = "my_list", joinColumns = @JoinColumn(name =
+    @CollectionTable(name = "colorProds", joinColumns = @JoinColumn(name =
             "id"))
     private List<String> color;
 
     @ElementCollection
-    @CollectionTable(name = "my_list", joinColumns = @JoinColumn(name =
+    @CollectionTable(name = "tallaProds", joinColumns = @JoinColumn(name =
             "id"))
     private List<String> talla;
 
