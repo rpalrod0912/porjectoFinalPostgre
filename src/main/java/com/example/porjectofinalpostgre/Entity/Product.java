@@ -8,7 +8,9 @@ import org.springframework.validation.annotation.Validated;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -65,6 +67,9 @@ public class Product implements Serializable {
     private List<String> talla;
 
     private String imagen;
+
+    @ManyToMany(mappedBy = "products")
+    private Set<Order> orders = new HashSet<>();
 
 
 }
