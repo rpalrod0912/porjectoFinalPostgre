@@ -16,6 +16,8 @@ public class OrderController {
     @PostMapping
     @ResponseStatus
     public Order createOrder(@RequestBody Order order){
+
+        System.out.println(order);
         return service.addOrder(order);
     }
 

@@ -14,9 +14,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id",referencedColumnName = "idUser", nullable = false)
     private User user;
+
+
 
     @ManyToMany
     @JoinTable(

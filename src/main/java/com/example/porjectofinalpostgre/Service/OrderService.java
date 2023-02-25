@@ -17,6 +17,7 @@ public class OrderService {
     OrderRepository orderRepository;
 
     public Order addOrder(Order order) {
+        System.out.println(order);
         return orderRepository.save(order);
     }
 
