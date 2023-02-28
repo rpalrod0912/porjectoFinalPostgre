@@ -1,5 +1,6 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Order {
     @JoinColumn(name = "user_id",referencedColumnName = "idUser", nullable = false)
     private User user;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(
             name = "order_product",

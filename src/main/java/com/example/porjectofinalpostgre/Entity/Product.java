@@ -1,5 +1,6 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -72,6 +73,7 @@ public class Product implements Serializable {
 
     private String imagen;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 

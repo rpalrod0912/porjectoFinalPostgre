@@ -2,10 +2,14 @@ package com.example.porjectofinalpostgre.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Getter;
 
 import java.io.Serializable;
 
-@Data
+@Getter @Setter
+@NoArgsConstructor
 @Entity
 @Table(name="users")
 public class User implements Serializable {
@@ -21,4 +25,11 @@ public class User implements Serializable {
     private String mail;
     @Column(name="pwd")
     private String pwd;
+
+    public User(String nombre, String apellidos, String mail, String pwd) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.mail = mail;
+        this.pwd = pwd;
+    }
 }
