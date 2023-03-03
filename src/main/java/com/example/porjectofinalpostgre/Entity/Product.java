@@ -3,6 +3,9 @@ package com.example.porjectofinalpostgre.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
@@ -12,6 +15,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+@Getter @Setter
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name="products")
@@ -68,8 +74,23 @@ public class Product implements Serializable {
 
     private String imagen;
 
+
+    //GET /products no funciona de momento hasta arreglar esto
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
 
-
+    public Product(String nombre, Float oferta, String descripcion, Double precio, String tipo, String categoria, String utilidad, String marca, String sexo, List<String> color, List<String> talla, String imagen) {
+        this.nombre = nombre;
+        this.oferta = oferta;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.utilidad = utilidad;
+        this.marca = marca;
+        this.sexo = sexo;
+        this.color = color;
+        this.talla = talla;
+        this.imagen = imagen;
+    }
 }
