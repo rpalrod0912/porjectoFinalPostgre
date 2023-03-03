@@ -2,7 +2,9 @@ package com.example.porjectofinalpostgre.Controller;
 
 import com.example.porjectofinalpostgre.Entity.Order;
 import com.example.porjectofinalpostgre.Service.OrderService;
+import com.example.porjectofinalpostgre.dto.OrdersDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus
-    public Order createOrder(@RequestBody Order order){
+    public Order createOrder(@RequestBody OrdersDTO order){
 
         System.out.println(order);
         return service.addOrder(order);

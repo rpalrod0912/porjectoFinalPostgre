@@ -27,7 +27,7 @@ public class ProductService {
 
     }
 
-    public Product getProductById(String productId){
+    public Product getProductById(Integer productId){
         System.out.println(productId);
         return productRepository.findById(productId).get();
     }
@@ -61,7 +61,7 @@ public class ProductService {
         return productRepository.save(existingProduct);
     }
 
-    public String deleteProduct(String productId){
+    public String deleteProduct(Integer productId){
         System.out.println(productId);
         productRepository.deleteById(productId);
         return productId+" producto eliminado de API ";

@@ -1,14 +1,21 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.example.porjectofinalpostgre.dto.OrdersDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+@Getter @Setter
+@NoArgsConstructor
+public class Order{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +24,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "idUser", nullable = false)
-    private User user;
+    private User user_id;
 
 
 
