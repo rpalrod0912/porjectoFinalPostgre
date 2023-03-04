@@ -2,6 +2,7 @@
 
 package com.example.porjectofinalpostgre.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,11 +14,13 @@ import java.io.Serializable;
 @Entity
 @Table(name="orderitems")
 public class OrderItem  implements Serializable {
-
+    @JsonBackReference
     @Id
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderItemId;
-
+    private Integer id;
+    @Column(name = "order_id")
+    private Integer orderId;
     @Column(name="productId")
     private @NotNull Integer idProduct;
 
@@ -25,17 +28,18 @@ public class OrderItem  implements Serializable {
     private @NotNull int quantity;
     @Column(name = "price")
     private @NotNull double price;
-    @Column(name = "order_id")
-    private Integer orderId;
 
+
+    /*
     @ManyToOne
     @JoinColumn(name = "order_id",referencedColumnName = "id",insertable = false,updatable = false)
     private Order order;
-
+*/
+    /*
     @OneToOne
     @JoinColumn(name = "productId",referencedColumnName = "idProduct",insertable = false,updatable = false)
     private Product product;
-
+*/
     public OrderItem(){}
 
 

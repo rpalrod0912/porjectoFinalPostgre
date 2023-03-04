@@ -2,8 +2,10 @@ package com.example.porjectofinalpostgre.Service;
 
 
 import com.example.porjectofinalpostgre.Entity.Order;
+import com.example.porjectofinalpostgre.Entity.OrderItem;
 import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Entity.User;
+import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
@@ -20,6 +22,9 @@ import java.util.*;
 @Transactional
 @Service
 public class OrderService {
+
+    @Autowired
+    OrderItemRepository orderItemRepository;
 
     @Autowired
     OrderRepository orderRepository;
@@ -45,7 +50,6 @@ public class OrderService {
         List<Double> listaPrecios=new ArrayList<Double>();
         for (Integer product_id : listaIdProds) {
             System.out.println(product_id);
-
             Double precioProducto=listaCantidades.get(contador)*productRepository.findById(product_id).get().getPrecio();
             listaPrecios.add(precioProducto);
             listaProds.add(productRepository.findById(product_id).get());
@@ -58,8 +62,23 @@ public class OrderService {
         newOrder.setPrices(listaPrecios);
         Double precioTotal=newOrder.getPrices().stream().mapToDouble(Double::valueOf).sum();
         newOrder.setPrecioFinal(precioTotal);
+        orderRepository.save(newOrder);
+        Integer contador2=0;
 
-        return orderRepository.save(newOrder);
+        for(Integer product_id : listaIdProds){
+
+
+            Double precioProducto=listaCantidades.get(contador2)*productRepository.findById(product_id).get().getPrecio();
+
+            OrderItem orderItem = new OrderItem(newOrder.getId(),product_id,listaCantidades.get(contador2),precioProducto);
+
+            orderItemRepository.save(orderItem);
+
+            contador2++;
+
+        }
+
+        return newOrder;
     }
 
     public List<OrdersDTO> getAllOrders(){
@@ -69,12 +88,15 @@ public class OrderService {
         List <Order> listaOrder = orderRepository.findAll();
         for (Order order: listaOrder){
             OrdersDTO newDto = new OrdersDTO();
+
             newDto.setId(order.getId());
             List <Integer> listaIdProd = new ArrayList<Integer>();
             newDto.setUser_id(order.getUser_id().getIdUser().toString());
             for (Product product : order.getProducts()){
                 listaIdProd.add(product.getIdProduct());
             }
+            newDto.setUser_id(order.getUser_id().getIdUser().toString());
+            newDto.setOrderproducts(orderItemRepository.getAllByOrderId(order.getId().toString()));
             newDto.setProducts(listaIdProd);
             newDto.setQuantity(order.getQuantity());
             newDto.setPrices(order.getPrices());
@@ -92,12 +114,13 @@ public class OrderService {
         OrdersDTO newDto = new OrdersDTO();
         newDto.setId(order.getId());
         newDto.setUser_id(order.getUser_id().getIdUser().toString());
-        List<Integer> listaIdProd = new ArrayList<Integer>();
+        newDto.setOrderproducts(orderItemRepository.getAllByOrderId(orderId));
+        /*List<Integer> listaIdProd = new ArrayList<Integer>();
         for (Product product : order.getProducts()){
             listaIdProd.add(product.getIdProduct());
         }
         //newDto.setTotalPrice(order.getPrices().stream().mapToDouble(Double::valueOf).sum());
-        newDto.setProducts(listaIdProd);
+        newDto.setProducts(listaIdProd);*/
         newDto.setQuantity(order.getQuantity());
         newDto.setPrices(order.getPrices());
         newDto.setTotalPrice(order.getPrecioFinal());

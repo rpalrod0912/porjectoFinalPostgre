@@ -1,6 +1,7 @@
 package com.example.porjectofinalpostgre.dto;
 
 import com.example.porjectofinalpostgre.Entity.Order;
+import com.example.porjectofinalpostgre.Entity.OrderItem;
 import com.example.porjectofinalpostgre.Entity.Product;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class OrdersDTO implements Serializable {
 
     private List<Double> prices;
 
-
+    private List<OrderItem> orderproducts;
     private Double totalPrice;
     public OrdersDTO(Order order){
 
