@@ -127,6 +127,9 @@ public class OrderService {
         return newDto;
     }
     public String deleteOrder(String orderId){
+
+        //List<OrderItem> itemsBorrar= orderItemRepository.getAllByOrderId(orderId);
+        orderItemRepository.deleteByOrderId(orderId);
         orderRepository.deleteById(orderId);
         return orderId+" pedido eliminadio de la API";
     }

@@ -12,4 +12,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem,String> {
 
     List<OrderItem> getAllByOrderId(String orderId);
 
+    List<OrderItem> deleteByOrderId(String orderId);
+
 }
