@@ -29,12 +29,12 @@ public class User implements Serializable {
     private String pwd;
 
 
-
     public User(String nombre, String apellidos, String mail, String pwd) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.mail = mail;
         this.pwd = pwd;
     }
+
 
 }

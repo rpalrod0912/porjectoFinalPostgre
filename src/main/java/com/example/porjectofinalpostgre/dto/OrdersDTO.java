@@ -2,6 +2,7 @@ package com.example.porjectofinalpostgre.dto;
 
 import com.example.porjectofinalpostgre.Entity.Order;
 import com.example.porjectofinalpostgre.Entity.Product;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,27 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrdersDTO implements Serializable {
-    private String user_id;
+
+    private String User_id;
 
     private List<Integer> products;
-
     public OrdersDTO(Order order){
 
     }
+
+/*
+    public OrdersDTO(Order order){
+
+
+
+
+    private Integer id;
+    private @NotNull Integer userId;
+
+    public OrdersDTO(Order order){
+        this.setId(order.getId());
+        this.setUserId(order.getUserId());
+    }
+
+     */
 }

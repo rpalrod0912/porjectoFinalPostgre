@@ -1,5 +1,6 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -22,6 +23,7 @@ import java.util.Set;
 @Entity
 @Table(name="products")
 public class Product implements Serializable {
+    @JsonManagedReference
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idProduct;
@@ -74,11 +76,10 @@ public class Product implements Serializable {
 
     private String imagen;
 
-
-    //GET /products no funciona de momento hasta arreglar esto
+        /*
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
-
+    */
     public Product(String nombre, Float oferta, String descripcion, Double precio, String tipo, String categoria, String utilidad, String marca, String sexo, List<String> color, List<String> talla, String imagen) {
         this.nombre = nombre;
         this.oferta = oferta;

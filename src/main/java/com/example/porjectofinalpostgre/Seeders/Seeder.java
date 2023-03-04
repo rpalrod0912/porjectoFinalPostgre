@@ -1,3 +1,4 @@
+/*
 package com.example.porjectofinalpostgre.Seeders;
 
 import com.example.porjectofinalpostgre.Entity.Order;
@@ -74,7 +75,7 @@ public class Seeder implements CommandLineRunner {
 
         User u1 = new User("pp", "ss", "a@a.a", "pestillo");
         userRepository.save(u1);
-
+    /*
         Set<Product> productos = new HashSet<>();
         productos.add(p1);
         productos.add(p2);
@@ -82,5 +83,8 @@ public class Seeder implements CommandLineRunner {
         o1.setUser_id(u1);
         o1.setProducts(productos);
         orderRepository.save(o1);
+
+
     }
 }
+*/
