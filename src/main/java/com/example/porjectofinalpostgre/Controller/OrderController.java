@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
-public class OrderController {
+public class OrderController  {
     @Autowired
     private OrderService service;
 
@@ -28,6 +29,14 @@ public class OrderController {
     public List<Order> getOrders(){
         return service.getAllOrders();
     }
+
+    @GetMapping("/{id}")
+    public Order getOrder( @PathVariable("id") String id){
+        System.out.println(id);
+
+        return service.getOrderById(id);
+    }
+
 
     @DeleteMapping("/{id}")
     public String deleteOrdeer(@PathVariable String orderId){
