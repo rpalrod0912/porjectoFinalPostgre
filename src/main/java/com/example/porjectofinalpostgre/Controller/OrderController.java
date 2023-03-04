@@ -37,7 +37,7 @@ public class OrderController  {
 
 
     @DeleteMapping("/{id}")
-    public String deleteOrdeer(@PathVariable String orderId){
-        return service.deleteOrder(orderId);
+    public String deleteOrder(@PathVariable("id") String id){
+        return service.deleteOrder(id);
     }
 }
