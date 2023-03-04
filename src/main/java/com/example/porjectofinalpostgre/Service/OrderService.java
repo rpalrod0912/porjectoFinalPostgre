@@ -15,8 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Transactional
 @Service
@@ -38,11 +37,27 @@ public class OrderService {
         System.out.println(userRepository.findById(userId).get());
         System.out.println("hola");
         newOrder.setUser_id(userRepository.findById(userId).get());
-        for (Integer product_id : order.getProducts()) {
+        //para saber en que indice nos encotnramos utilizadno un enhacend loop
+        Integer contador=0;
+        List <Integer> listaCantidades= order.getQuantity();
+        List <Integer> listaIdProds= order.getProducts();
+        List <Product> listaProds= new ArrayList<Product>();
+        List<Double> listaPrecios=new ArrayList<Double>();
+        for (Integer product_id : listaIdProds) {
             System.out.println(product_id);
-            newOrder.getProducts().add(productRepository.findById(product_id).get());
+
+            Double precioProducto=listaCantidades.get(contador)*productRepository.findById(product_id).get().getPrecio();
+            listaPrecios.add(precioProducto);
+            listaProds.add(productRepository.findById(product_id).get());
+            //newOrder.getProducts().add(productRepository.findById(product_id).get());
+            contador++;
         }
+        Set <Product> arrayToSet= new LinkedHashSet<>((listaProds));
+        newOrder.setProducts(arrayToSet);
         newOrder.setQuantity(order.getQuantity());
+        newOrder.setPrices(listaPrecios);
+        Double precioTotal=newOrder.getPrices().stream().mapToDouble(Double::valueOf).sum();
+        newOrder.setPrecioFinal(precioTotal);
 
         return orderRepository.save(newOrder);
     }
@@ -62,6 +77,9 @@ public class OrderService {
             }
             newDto.setProducts(listaIdProd);
             newDto.setQuantity(order.getQuantity());
+            newDto.setPrices(order.getPrices());
+            newDto.setTotalPrice(order.getPrecioFinal());
+            newDto.setTotalPrice(order.getPrecioFinal());
             System.out.println(newDto);
             listaEnviar.add(newDto);
         }
@@ -78,8 +96,11 @@ public class OrderService {
         for (Product product : order.getProducts()){
             listaIdProd.add(product.getIdProduct());
         }
+        //newDto.setTotalPrice(order.getPrices().stream().mapToDouble(Double::valueOf).sum());
         newDto.setProducts(listaIdProd);
         newDto.setQuantity(order.getQuantity());
+        newDto.setPrices(order.getPrices());
+        newDto.setTotalPrice(order.getPrecioFinal());
         return newDto;
     }
     public String deleteOrder(String orderId){

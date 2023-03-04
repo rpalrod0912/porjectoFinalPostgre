@@ -23,6 +23,11 @@ public class OrdersDTO implements Serializable {
     private List<Integer> products;
 
     private List<Integer> quantity;
+
+    private List<Double> prices;
+
+
+    private Double totalPrice;
     public OrdersDTO(Order order){
 
     }

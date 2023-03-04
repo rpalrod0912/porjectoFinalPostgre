@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,13 +43,21 @@ public class Order implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "idProduct")
 
     )
-    private Set<Product> products = new HashSet<>();
+    private Set<Product> products = new LinkedHashSet<>();
 
     @ElementCollection
     @CollectionTable(name = "cantidaProd", joinColumns = @JoinColumn(name =
             "id"))
     private List<Integer> Quantity;
 
+    @ElementCollection
+    @CollectionTable(name = "preciosProd", joinColumns = @JoinColumn(name =
+            "id"))
+    private List<Double> prices;
+
+
+    @Column(name = "preciototal")
+    private Double precioFinal;
 
 
 /*
