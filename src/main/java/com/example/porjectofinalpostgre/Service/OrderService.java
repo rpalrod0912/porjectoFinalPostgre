@@ -42,6 +42,8 @@ public class OrderService {
             System.out.println(product_id);
             newOrder.getProducts().add(productRepository.findById(product_id).get());
         }
+        newOrder.setQuantity(order.getQuantity());
+
         return orderRepository.save(newOrder);
     }
 
@@ -59,6 +61,7 @@ public class OrderService {
                 listaIdProd.add(product.getIdProduct());
             }
             newDto.setProducts(listaIdProd);
+            newDto.setQuantity(order.getQuantity());
             System.out.println(newDto);
             listaEnviar.add(newDto);
         }
@@ -76,7 +79,7 @@ public class OrderService {
             listaIdProd.add(product.getIdProduct());
         }
         newDto.setProducts(listaIdProd);
-
+        newDto.setQuantity(order.getQuantity());
         return newDto;
     }
     public String deleteOrder(String orderId){

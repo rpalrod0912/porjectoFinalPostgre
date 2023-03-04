@@ -21,6 +21,8 @@ public class OrdersDTO implements Serializable {
     private String User_id;
 
     private List<Integer> products;
+
+    private List<Integer> quantity;
     public OrdersDTO(Order order){
 
     }

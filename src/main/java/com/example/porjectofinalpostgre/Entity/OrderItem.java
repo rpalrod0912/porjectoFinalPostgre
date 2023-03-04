@@ -1,5 +1,5 @@
 
-/*
+
 package com.example.porjectofinalpostgre.Entity;
 
 import jakarta.persistence.*;
@@ -7,17 +7,19 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter@Setter
 @Entity
 @Table(name="orderitems")
-public class OrderItem {
+public class OrderItem  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderItemId;
 
     @Column(name="productId")
-    private @NotNull Long productId;
+    private @NotNull Integer idProduct;
 
     @Column(name="quantity")
     private @NotNull int quantity;
@@ -31,14 +33,14 @@ public class OrderItem {
     private Order order;
 
     @OneToOne
-    @JoinColumn(name = "productId",referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "productId",referencedColumnName = "idProduct",insertable = false,updatable = false)
     private Product product;
 
     public OrderItem(){}
 
 
-    public OrderItem(Integer orderId, @NotNull Long product_id, @NotNull int quantity, @NotNull double price) {
-        this.productId = product_id;
+    public OrderItem(Integer orderId, @NotNull Integer product_id, @NotNull Integer quantity, @NotNull double price) {
+        this.idProduct = product_id;
         this.quantity = quantity;
         this.price = price;
         this.orderId=orderId;
@@ -46,4 +48,3 @@ public class OrderItem {
 
 
 }
-*/

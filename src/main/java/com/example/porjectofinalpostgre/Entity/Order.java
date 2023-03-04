@@ -18,7 +18,7 @@ import java.util.Set;
 @Table(name = "orders")
 @Getter @Setter
 @NoArgsConstructor
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +39,16 @@ public class Order {
             name = "order_product",
             joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "idProduct")
+
     )
     private Set<Product> products = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "cantidaProd", joinColumns = @JoinColumn(name =
+            "id"))
+    private List<Integer> Quantity;
+
+
 
 /*
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
