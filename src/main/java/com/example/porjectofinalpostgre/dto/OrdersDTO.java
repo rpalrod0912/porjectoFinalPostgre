@@ -16,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 public class OrdersDTO implements Serializable {
 
+
+    private Integer id;
     private String User_id;
 
     private List<Integer> products;

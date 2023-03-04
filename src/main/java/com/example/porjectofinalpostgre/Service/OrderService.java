@@ -2,6 +2,7 @@ package com.example.porjectofinalpostgre.Service;
 
 
 import com.example.porjectofinalpostgre.Entity.Order;
+import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Entity.User;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -43,15 +45,39 @@ public class OrderService {
         return orderRepository.save(newOrder);
     }
 
-    public List<Order> getAllOrders(){
-
+    public List<OrdersDTO> getAllOrders(){
+        //Lista vacia que contendra OrderDTO para enviar al cliente
+        List <OrdersDTO> listaEnviar =  new ArrayList<>();
+        //Lista completa con todos los Orders SIN SERIALIZAR
         List <Order> listaOrder = orderRepository.findAll();
+        for (Order order: listaOrder){
+            OrdersDTO newDto = new OrdersDTO();
+            newDto.setId(order.getId());
+            List <Integer> listaIdProd = new ArrayList<Integer>();
+            newDto.setUser_id(order.getUser_id().getIdUser().toString());
+            for (Product product : order.getProducts()){
+                listaIdProd.add(product.getIdProduct());
+            }
+            newDto.setProducts(listaIdProd);
+            System.out.println(newDto);
+            listaEnviar.add(newDto);
+        }
         System.out.println(orderRepository.findAll());
-        return orderRepository.findAll();
+        return listaEnviar;
     }
 
-    public Order getOrderById(String orderId){
-        return orderRepository.findById(orderId).get();
+    public OrdersDTO getOrderById(String orderId){
+        Order order = orderRepository.findById(orderId).get();
+        OrdersDTO newDto = new OrdersDTO();
+        newDto.setId(order.getId());
+        newDto.setUser_id(order.getUser_id().getIdUser().toString());
+        List<Integer> listaIdProd = new ArrayList<Integer>();
+        for (Product product : order.getProducts()){
+            listaIdProd.add(product.getIdProduct());
+        }
+        newDto.setProducts(listaIdProd);
+
+        return newDto;
     }
     public String deleteOrder(String orderId){
         orderRepository.deleteById(orderId);

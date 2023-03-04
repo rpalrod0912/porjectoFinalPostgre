@@ -4,10 +4,8 @@ import com.example.porjectofinalpostgre.Entity.Order;
 import com.example.porjectofinalpostgre.Service.OrderService;
 import com.example.porjectofinalpostgre.dto.OrdersDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 @RestController
@@ -26,12 +24,12 @@ public class OrderController  {
 
 
     @GetMapping
-    public List<Order> getOrders(){
+    public List<OrdersDTO> getOrders(){
         return service.getAllOrders();
     }
 
     @GetMapping("/{id}")
-    public Order getOrder( @PathVariable("id") String id){
+    public OrdersDTO getOrder( @PathVariable("id") String id){
         System.out.println(id);
 
         return service.getOrderById(id);
