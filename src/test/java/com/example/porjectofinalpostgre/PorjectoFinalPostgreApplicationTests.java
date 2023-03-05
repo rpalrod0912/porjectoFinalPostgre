@@ -119,8 +119,75 @@ class PorjectoFinalPostgreApplicationTests {
 	}
 
 
+	@Test
+	void getById() throws Exception{
+		mvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.idUser").value(1))
+				.andExpect(jsonPath("$.nombre").value("Rafael"))
+				.andExpect(jsonPath("$.mail").value("rafapr0001@gmail.com"));
+
+		mvc.perform(get("/users/2").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.idUser").value(2))
+				.andExpect(jsonPath("$.nombre").value("Calvorota"))
+				.andExpect(jsonPath("$.mail").value("calvorota0001@gmail.com"));
 
 
+		mvc.perform(get("/products/3").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.idProduct").value(3))
+				.andExpect(jsonPath("$.nombre").value("New Balanace 550"))
+				.andExpect(jsonPath("$.precio").value(150))
+				.andExpect(jsonPath("$.oferta").value(15))
+				.andExpect(jsonPath("$.tipo").value("Zapatos"))
+		;
+
+		mvc.perform(get("/products/5").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.idProduct").value(5))
+				.andExpect(jsonPath("$.nombre").value("Chandal Nike Básico"))
+				.andExpect(jsonPath("$.precio").value(68.99))
+				.andExpect(jsonPath("$.oferta").value(IsNull.nullValue()))
+				.andExpect(jsonPath("$.tipo").value("Sudadera"))
+		;
 
 
-}
+		mvc.perform(get("/orders/2").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.id").value(2))
+				.andExpect(jsonPath("$.quantity.size()").value(4))
+				.andExpect(jsonPath("$.orderproducts[0].orderId").value(2))
+				.andExpect(jsonPath("$.orderproducts[0].idProduct").value(1))
+				.andExpect(jsonPath("$.orderproducts[0].price").value(120.0))
+				.andExpect(jsonPath("$.orderproducts[2].orderId").value(2))
+				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(3))
+				.andExpect(jsonPath("$.orderproducts[2].price").value(450.0))
+				.andExpect(jsonPath("$.totalPrice").value(882.47))
+				.andExpect(jsonPath("$.user_id").value(3))
+		;
+
+
+		mvc.perform(get("/orders/5").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.id").value(5))
+				.andExpect(jsonPath("$.quantity.size()").value(3))
+				.andExpect(jsonPath("$.orderproducts[1].orderId").value(5))
+				.andExpect(jsonPath("$.orderproducts[1].idProduct").value(2))
+				.andExpect(jsonPath("$.orderproducts[1].price").value(280.0))
+				.andExpect(jsonPath("$.orderproducts[2].orderId").value(5))
+				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(3))
+				.andExpect(jsonPath("$.orderproducts[2].price").value(450.0))
+				.andExpect(jsonPath("$.totalPrice").value(779.99))
+				.andExpect(jsonPath("$.user_id").value(1))
+
+		;
+
+
+	}}
