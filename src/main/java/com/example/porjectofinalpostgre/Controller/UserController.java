@@ -32,5 +32,10 @@ public class UserController {
         Optional<User> user=userRepository.findById(idUser);
         return userRepository.findById(idUser);
     }
+    @DeleteMapping("/{idUser}")
+    public String deleteUserById(@PathVariable String idUser){
+        userRepository.deleteById(idUser);
+        return "El usuario "+idUser+"ha sido eliminado de la base de datos";
+    }
 
 }

@@ -93,7 +93,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[0].orderproducts[2].orderId").value(2))
 				.andExpect(jsonPath("$[0].orderproducts[2].idProduct").value(3))
 				.andExpect(jsonPath("$[0].orderproducts[2].price").value(450.0))
-				.andExpect(jsonPath("$[0].totalPrice").value(882.47))
+				.andExpect(jsonPath("$[0].totalPrice").value(774.94))
 				.andExpect(jsonPath("$[0].user_id").value(3))
 		;
 
@@ -107,9 +107,9 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[3].orderproducts[1].idProduct").value(2))
 				.andExpect(jsonPath("$[3].orderproducts[1].price").value(280.0))
 				.andExpect(jsonPath("$[3].orderproducts[2].orderId").value(5))
-				.andExpect(jsonPath("$[3].orderproducts[2].idProduct").value(3))
-				.andExpect(jsonPath("$[3].orderproducts[2].price").value(450.0))
-				.andExpect(jsonPath("$[3].totalPrice").value(779.99))
+				.andExpect(jsonPath("$[3].orderproducts[2].idProduct").value(6))
+				.andExpect(jsonPath("$[3].orderproducts[2].price").value(149.97))
+				.andExpect(jsonPath("$[3].totalPrice").value(579.97))
 				.andExpect(jsonPath("$[3].user_id").value(1))
 
 				;
@@ -166,7 +166,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$.orderproducts[2].orderId").value(2))
 				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(3))
 				.andExpect(jsonPath("$.orderproducts[2].price").value(450.0))
-				.andExpect(jsonPath("$.totalPrice").value(882.47))
+				.andExpect(jsonPath("$.totalPrice").value(774.94))
 				.andExpect(jsonPath("$.user_id").value(3))
 		;
 
@@ -180,9 +180,9 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$.orderproducts[1].idProduct").value(2))
 				.andExpect(jsonPath("$.orderproducts[1].price").value(280.0))
 				.andExpect(jsonPath("$.orderproducts[2].orderId").value(5))
-				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(3))
-				.andExpect(jsonPath("$.orderproducts[2].price").value(450.0))
-				.andExpect(jsonPath("$.totalPrice").value(779.99))
+				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(6))
+				.andExpect(jsonPath("$.orderproducts[2].price").value(149.97))
+				.andExpect(jsonPath("$.totalPrice").value(579.97))
 				.andExpect(jsonPath("$.user_id").value(1))
 
 		;
