@@ -47,7 +47,7 @@ public class UserController {
 
         orderService.deleteOrderByUserId(userRepository.findById(idUser).get());
         userRepository.deleteById(idUser);
-        return "El usuario "+idUser+"ha sido eliminado de la base de datos";
+        return "El usuario "+idUser+" ha sido eliminado de la base de datos";
     }
 
 }

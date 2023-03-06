@@ -14,6 +14,9 @@ import java.util.UUID;
 @Service
 public class ProductService {
 
+
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private ProductRepository productRepository;
 
@@ -63,6 +66,7 @@ public class ProductService {
 
     public String deleteProduct(Integer productId){
         System.out.println(productId);
+        orderService.
         productRepository.deleteById(productId);
         return productId+" producto eliminado de API ";
     }
