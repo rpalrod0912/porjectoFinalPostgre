@@ -300,7 +300,7 @@ public class Seeder implements CommandLineRunner {
         orderController.createOrder(o4);
         orderController.createOrder(o5);
 
-        orderRepository.deleteById("1");
+        orderController.deleteOrder("1");
 
 
     }

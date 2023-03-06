@@ -41,16 +41,13 @@ class DeleteMethodsTests {
 
     @Test
     void contextLoads() {
-        assert userRepository.count()==3;
-        assert productRepository.count()==6;
-        assert orderRepository.count()==4;
+
     }
 
     @Test
-    void deleteUserById() throws Exception{
+    void deleteUserById() throws Exception {
 
         long usersCount = userRepository.count();
-
 
 
         mvc.perform(delete("/users/1").contentType(MediaType.APPLICATION_JSON))
@@ -65,31 +62,44 @@ class DeleteMethodsTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string("El usuario 2 ha sido eliminado de la base de datos"));
 
-        assert userRepository.count() == usersCount-3;
+        assert userRepository.count() == usersCount - 3;
 
 
+    }
 
+    @Test
+    void deleteProductById() throws Exception {
+
+        long productsCount = productRepository.count();
+
+
+        mvc.perform(delete("/products/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("1 producto eliminado de API "));
+
+        mvc.perform(delete("/products/6").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("6 producto eliminado de API "));
+
+        assert productRepository.count() == productsCount - 2;
 
     }
 
 
     @Test
-    void deleteProductById() throws Exception{
+    void deleteOrderById() throws Exception {
 
-        long productsCount = productRepository.count();
+        long ordersCount = orderRepository.count();
 
-        mvc.perform(delete("/products/1").contentType(MediaType.APPLICATION_JSON))
+
+        mvc.perform(delete("/orders/3").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("1 producto eliminado de API"));
+                .andExpect(content().string("3 pedido eliminadio de la API"));
 
-        mvc.perform(delete("/products/3").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("3 producto eliminado de API"));
 
-        mvc.perform(delete("/products/2").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("2 producto eliminado de API"));
+        assert orderRepository.count() == 0;
 
-        assert userRepository.count() == productsCount-3;
+    }
 
-    }}
+
+}

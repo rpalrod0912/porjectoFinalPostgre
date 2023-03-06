@@ -1,13 +1,18 @@
 package com.example.porjectofinalpostgre.Service;
 
 
+import com.example.porjectofinalpostgre.Entity.Order;
+import com.example.porjectofinalpostgre.Entity.OrderItem;
 import com.example.porjectofinalpostgre.Entity.Product;
+import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
+import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 @Transactional
@@ -19,6 +24,11 @@ public class ProductService {
     private OrderService orderService;
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     public Product addProduct(Product product){
 
@@ -65,8 +75,10 @@ public class ProductService {
     }
 
     public String deleteProduct(Integer productId){
-        System.out.println(productId);
-        orderService.
+        List<OrderItem> productIdOrders=orderItemRepository.findByIdProduct(productId);
+        for(OrderItem productIdOrder  : productIdOrders){
+            orderService.deleteOrder(productIdOrder.getOrderId().toString());
+        }
         productRepository.deleteById(productId);
         return productId+" producto eliminado de API ";
     }
