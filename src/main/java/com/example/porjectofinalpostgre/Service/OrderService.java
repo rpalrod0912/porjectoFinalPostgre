@@ -37,11 +37,11 @@ public class OrderService {
 
         Order newOrder = new Order();
 
-        System.out.println(order.getUser_id());
-        String userId=order.getUser_id();
+        System.out.println(order.getUserid());
+        String userId=order.getUserid();
         System.out.println(userRepository.findById(userId).get());
         System.out.println("hola");
-        newOrder.setUser_id(userRepository.findById(userId).get());
+        newOrder.setUserid(userRepository.findById(userId).get());
         //para saber en que indice nos encotnramos utilizadno un enhacend loop
         Integer contador=0;
         List <Integer> listaCantidades= order.getQuantity();
@@ -91,11 +91,11 @@ public class OrderService {
 
             newDto.setId(order.getId());
             List <Integer> listaIdProd = new ArrayList<Integer>();
-            newDto.setUser_id(order.getUser_id().getIdUser().toString());
+            newDto.setUserid(order.getUserid().getIdUser().toString());
             for (Product product : order.getProducts()){
                 listaIdProd.add(product.getIdProduct());
             }
-            newDto.setUser_id(order.getUser_id().getIdUser().toString());
+            newDto.setUserid(order.getUserid().getIdUser().toString());
             newDto.setOrderproducts(orderItemRepository.getAllByOrderId(order.getId().toString()));
             newDto.setProducts(listaIdProd);
             newDto.setQuantity(order.getQuantity());
@@ -113,7 +113,7 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).get();
         OrdersDTO newDto = new OrdersDTO();
         newDto.setId(order.getId());
-        newDto.setUser_id(order.getUser_id().getIdUser().toString());
+        newDto.setUserid(order.getUserid().getIdUser().toString());
         newDto.setOrderproducts(orderItemRepository.getAllByOrderId(orderId));
         /*List<Integer> listaIdProd = new ArrayList<Integer>();
         for (Product product : order.getProducts()){
@@ -132,6 +132,15 @@ public class OrderService {
         orderItemRepository.deleteByOrderId(orderId);
         orderRepository.deleteById(orderId);
         return orderId+" pedido eliminadio de la API";
+    }
+
+    public void deleteOrderByUserId(User userId){
+        List<Order> listaOrdenes=orderRepository.deleteByUserid(userId);
+       for (Order order : listaOrdenes){
+            orderItemRepository.deleteByOrderId(order.getId().toString());
+
+        }
+        //List<OrderItem> itemsBorrar= orderItemRepository.getAllByOrderId(orderId);
     }
 
 

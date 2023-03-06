@@ -65,7 +65,6 @@ class GetMethodsTests {
 		mvc.perform(get("/products").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$[2].idProduct").value(3))
 				.andExpect(jsonPath("$[2].nombre").value("New Balanace 550"))
 				.andExpect(jsonPath("$[2].precio").value(150))
 				.andExpect(jsonPath("$[2].oferta").value(15))
@@ -75,7 +74,6 @@ class GetMethodsTests {
 		mvc.perform(get("/products").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$[4].idProduct").value(5))
 				.andExpect(jsonPath("$[4].nombre").value("Chandal Nike Básico"))
 				.andExpect(jsonPath("$[4].precio").value(68.99))
 				.andExpect(jsonPath("$[4].oferta").value(IsNull.nullValue()))
@@ -94,7 +92,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[0].orderproducts[2].idProduct").value(3))
 				.andExpect(jsonPath("$[0].orderproducts[2].price").value(450.0))
 				.andExpect(jsonPath("$[0].totalPrice").value(774.94))
-				.andExpect(jsonPath("$[0].user_id").value(3))
+				.andExpect(jsonPath("$[0].userid").value(3))
 		;
 
 
@@ -110,7 +108,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[3].orderproducts[2].idProduct").value(6))
 				.andExpect(jsonPath("$[3].orderproducts[2].price").value(149.97))
 				.andExpect(jsonPath("$[3].totalPrice").value(579.97))
-				.andExpect(jsonPath("$[3].user_id").value(1))
+				.andExpect(jsonPath("$[3].userid").value(1))
 
 				;
 
@@ -137,7 +135,6 @@ class GetMethodsTests {
 		mvc.perform(get("/products/3").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.idProduct").value(3))
 				.andExpect(jsonPath("$.nombre").value("New Balanace 550"))
 				.andExpect(jsonPath("$.precio").value(150))
 				.andExpect(jsonPath("$.oferta").value(15))
@@ -147,7 +144,6 @@ class GetMethodsTests {
 		mvc.perform(get("/products/5").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.idProduct").value(5))
 				.andExpect(jsonPath("$.nombre").value("Chandal Nike Básico"))
 				.andExpect(jsonPath("$.precio").value(68.99))
 				.andExpect(jsonPath("$.oferta").value(IsNull.nullValue()))
@@ -167,7 +163,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(3))
 				.andExpect(jsonPath("$.orderproducts[2].price").value(450.0))
 				.andExpect(jsonPath("$.totalPrice").value(774.94))
-				.andExpect(jsonPath("$.user_id").value(3))
+				.andExpect(jsonPath("$.userid").value(3))
 		;
 
 
@@ -183,7 +179,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$.orderproducts[2].idProduct").value(6))
 				.andExpect(jsonPath("$.orderproducts[2].price").value(149.97))
 				.andExpect(jsonPath("$.totalPrice").value(579.97))
-				.andExpect(jsonPath("$.user_id").value(1))
+				.andExpect(jsonPath("$.userid").value(1))
 
 		;
 

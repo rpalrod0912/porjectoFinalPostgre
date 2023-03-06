@@ -270,27 +270,27 @@ public class Seeder implements CommandLineRunner {
 
 
         OrdersDTO o1= new OrdersDTO();
-        o1.setUser_id(u1.getIdUser().toString());
+        o1.setUserid(u1.getIdUser().toString());
         o1.setProducts(productso1);
         o1.setQuantity(quantityo1);
 
         OrdersDTO o2= new OrdersDTO();
-        o2.setUser_id(u3.getIdUser().toString());
+        o2.setUserid(u3.getIdUser().toString());
         o2.setProducts(productso2);
         o2.setQuantity(quantityo2);
 
         OrdersDTO o3= new OrdersDTO();
-        o3.setUser_id(u3.getIdUser().toString());
+        o3.setUserid(u3.getIdUser().toString());
         o3.setProducts(productso3);
         o3.setQuantity(quantityo3);
 
         OrdersDTO o4= new OrdersDTO();
-        o4.setUser_id(u1.getIdUser().toString());
+        o4.setUserid(u1.getIdUser().toString());
         o4.setProducts(productso4);
         o4.setQuantity(quantityo4);
 
         OrdersDTO o5= new OrdersDTO();
-        o5.setUser_id(u1.getIdUser().toString());
+        o5.setUserid(u1.getIdUser().toString());
         o5.setProducts(productso5);
         o5.setQuantity(quantityo5);
 

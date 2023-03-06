@@ -134,7 +134,7 @@ class PostMethodsTests {
 
     @Test
     void addOrdersTest() throws Exception{
-        String testOrder="{\"user_id\":\"1\",\"products\":[6,3,2],\"quantity\":[2,1,4]}";
+        String testOrder="{\"userid\":\"1\",\"products\":[6,3,2],\"quantity\":[2,1,4]}";
 
         List<Double> pricesList= new ArrayList<>();
         pricesList.add(99.98);
@@ -147,7 +147,7 @@ class PostMethodsTests {
         quantityList.add(4);
 
 
-        String testOrder2="{\"user_id\":\"3\",\"products\":[2,1,3],\"quantity\":[4,5,2]}";
+        String testOrder2="{\"userid\":\"3\",\"products\":[2,1,3],\"quantity\":[4,5,2]}";
 
         List<Double> pricesList2= new ArrayList<>();
         pricesList2.add(560.0);
@@ -167,7 +167,7 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.prices").value(pricesList))
                 .andExpect(jsonPath("$.quantity").value(quantityList))
                 .andExpect(jsonPath("$.precioFinal").value(809.98))
-                .andExpect(jsonPath("$.user_id.idUser").value(1));
+                .andExpect(jsonPath("$.userid.idUser").value(1));
 
         mvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON).content(testOrder2))
                 .andExpect(status().isOk())
@@ -176,7 +176,7 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.prices").value(pricesList2))
                 .andExpect(jsonPath("$.quantity").value(quantityList2))
                 .andExpect(jsonPath("$.precioFinal").value(1460.0))
-                .andExpect(jsonPath("$.user_id.idUser").value(3));
+                .andExpect(jsonPath("$.userid.idUser").value(3));
     }
 
 }
