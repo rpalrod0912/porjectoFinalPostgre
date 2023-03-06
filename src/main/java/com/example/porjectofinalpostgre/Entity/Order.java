@@ -22,6 +22,14 @@ import java.util.Set;
 @NoArgsConstructor
 public class Order implements Serializable {
 
+
+    /*ESTRUCTURA PARA ENVIAR JSON DE POST ORDER
+ {
+     "user_id":1,
+ "products":[7],
+ "quantity":[1]
+}
+ */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -41,7 +49,6 @@ public class Order implements Serializable {
             name = "order_product",
             joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "idProduct")
-
     )
     private Set<Product> products = new LinkedHashSet<>();
 

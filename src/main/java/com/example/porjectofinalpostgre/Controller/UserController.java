@@ -16,9 +16,9 @@ public class UserController {
     UserRepository userRepository;
 
     @PostMapping
-    public String create(@RequestBody User user){
-        userRepository.save(user);
-        return "Usuario creado";
+    public User create(@RequestBody User user){
+
+        return userRepository.save(user);
     }
 
     @GetMapping

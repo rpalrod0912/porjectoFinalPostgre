@@ -1,5 +1,6 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ import java.util.Set;
 @Entity
 @Table(name="products")
 public class Product implements Serializable {
-    @JsonManagedReference
+    @JsonBackReference
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idProduct;

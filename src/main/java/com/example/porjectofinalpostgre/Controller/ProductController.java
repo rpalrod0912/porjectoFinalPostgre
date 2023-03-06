@@ -2,6 +2,8 @@ package com.example.porjectofinalpostgre.Controller;
 
 
 import com.example.porjectofinalpostgre.Entity.Product;
+import com.example.porjectofinalpostgre.Entity.User;
+import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,13 @@ public class ProductController {
 
     private ProductService service;
 
+    @Autowired
+    private ProductRepository repository;
+
     @PostMapping
-    @ResponseStatus
-    public Product createProduct(@RequestBody Product product){
-        return service.addProduct(product);
+    public Product create(@RequestBody Product product){
+
+        return repository.save(product);
     }
 
     @GetMapping

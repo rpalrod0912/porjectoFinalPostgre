@@ -11,6 +11,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController  {
+
+
+    /*ESTRUCTURA PARA ENVIAR JSON DE POST ORDER
+    {
+		"user_id":1,
+	"products":[7],
+	"quantity":[1]
+}
+    */
     @Autowired
     private OrderService service;
 
