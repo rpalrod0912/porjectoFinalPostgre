@@ -15,6 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -74,8 +77,106 @@ class PostMethodsTests {
     void addProductsTest() throws Exception{
         Long productsCount=productRepository.count();
 
-        String testProduct="{\"nombre\":\"Juan\",\"apellidos\":\"Antonio\",\"mail\":\"juan01@gmail.com\",\"pwd\":\"miContraseña222\"}";
+        String testProduct="{\"nombre\":\"Zapatos Basicos\",\"oferta\":10.0,\"descripcion\":\"Zapatos Básicos\",\"precio\":40.00,\"tipo\":\"Zapatos\",\"categoria\":\"Deportivas\",\"utilidad\":\"Casual\",\"marca\":\"Mercadona\",\"sexo\":\"Unisex\",\"color\":[\"Blanco\",\"Negro\"],\"talla\":[\"24\",\"39\"],\"imagen\":\"ninguna\"}";
+        List<String> colorList=new ArrayList<>();
+        colorList.add("Blanco");
+        colorList.add("Negro");
+        List<String> tallaList=new ArrayList<>();
+        tallaList.add("24");
+        tallaList.add("39");
 
+
+
+        String testProduct2="{\"nombre\":\"Camisa Negra\",\"oferta\":null,\"descripcion\":\"Camisa Negra Básica\",\"precio\":30.00,\"tipo\":\"Camiseta\",\"categoria\":\"Deportivas\",\"utilidad\":\"Casual\",\"marca\":\"Quechua\",\"sexo\":\"Hombre\",\"color\":[\"Negro\"],\"talla\":[\"S\",\"L\"],\"imagen\":\"ninguna\"}";
+
+        List<String> colorList2=new ArrayList<>();
+        colorList2.add("Negro");
+
+        List<String> tallaList2=new ArrayList<>();
+        tallaList2.add("S");
+        tallaList2.add("L");
+
+        mvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(testProduct))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.nombre").value("Zapatos Basicos"))
+                .andExpect(jsonPath("$.oferta").value(10.0))
+                .andExpect(jsonPath("$.descripcion").value("Zapatos Básicos"))
+                .andExpect(jsonPath("$.precio").value(40.0))
+                .andExpect(jsonPath("$.tipo").value("Zapatos"))
+                .andExpect(jsonPath("$.categoria").value("Deportivas"))
+                .andExpect(jsonPath("$.utilidad").value("Casual"))
+                .andExpect(jsonPath("$.marca").value("Mercadona"))
+                .andExpect(jsonPath("$.sexo").value("Unisex"))
+                .andExpect(jsonPath("$.color").value(colorList))
+                .andExpect(jsonPath("$.talla").value(tallaList))
+                .andExpect(jsonPath("$.imagen").value("ninguna"));
+
+
+        mvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(testProduct2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.nombre").value("Camisa Negra"))
+                .andExpect(jsonPath("$.oferta").value(IsNull.nullValue()))
+                .andExpect(jsonPath("$.descripcion").value("Camisa Negra Básica"))
+                .andExpect(jsonPath("$.precio").value(30.0))
+                .andExpect(jsonPath("$.tipo").value("Camiseta"))
+                .andExpect(jsonPath("$.categoria").value("Deportivas"))
+                .andExpect(jsonPath("$.utilidad").value("Casual"))
+                .andExpect(jsonPath("$.marca").value("Quechua"))
+                .andExpect(jsonPath("$.sexo").value("Hombre"))
+                .andExpect(jsonPath("$.color").value(colorList2))
+                .andExpect(jsonPath("$.talla").value(tallaList2))
+                .andExpect(jsonPath("$.imagen").value("ninguna"));
+
+
+    }
+
+    @Test
+    void addOrdersTest() throws Exception{
+        String testOrder="{\"user_id\":\"1\",\"products\":[6,3,2],\"quantity\":[2,1,4]}";
+
+        List<Double> pricesList= new ArrayList<>();
+        pricesList.add(99.98);
+        pricesList.add(150.0);
+        pricesList.add(560.0);
+
+        List<Integer> quantityList = new ArrayList<>();
+        quantityList.add(2);
+        quantityList.add(1);
+        quantityList.add(4);
+
+
+        String testOrder2="{\"user_id\":\"3\",\"products\":[2,1,3],\"quantity\":[4,5,2]}";
+
+        List<Double> pricesList2= new ArrayList<>();
+        pricesList2.add(560.0);
+        pricesList2.add(600.0);
+        pricesList2.add(300.0);
+
+
+        List<Integer> quantityList2 = new ArrayList<>();
+        quantityList2.add(4);
+        quantityList2.add(5);
+        quantityList2.add(2);
+
+        mvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON).content(testOrder))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(6))
+                .andExpect(jsonPath("$.prices").value(pricesList))
+                .andExpect(jsonPath("$.quantity").value(quantityList))
+                .andExpect(jsonPath("$.precioFinal").value(809.98))
+                .andExpect(jsonPath("$.user_id.idUser").value(1));
+
+        mvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON).content(testOrder2))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(7))
+                .andExpect(jsonPath("$.prices").value(pricesList2))
+                .andExpect(jsonPath("$.quantity").value(quantityList2))
+                .andExpect(jsonPath("$.precioFinal").value(1460.0))
+                .andExpect(jsonPath("$.user_id.idUser").value(3));
     }
 
 }

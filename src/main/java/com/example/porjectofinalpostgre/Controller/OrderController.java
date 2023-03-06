@@ -24,7 +24,6 @@ public class OrderController  {
     private OrderService service;
 
     @PostMapping
-    @ResponseStatus
     public Order createOrder(@RequestBody OrdersDTO order){
 
         System.out.println(order);

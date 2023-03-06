@@ -17,7 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 public class OrdersDTO implements Serializable {
 
-
+    /*ESTRUCTURA PARA ENVIAR JSON DE POST ORDER
+ {
+     "user_id":1,
+ "products":[7],
+ "quantity":[1]
+}
+ */
     private Integer id;
     private String User_id;
 
