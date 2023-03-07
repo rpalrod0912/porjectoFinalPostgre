@@ -67,6 +67,7 @@ public class ProductService {
         if(productRequest.getDescripcion()!=null){
             existingProduct.setDescripcion(productRequest.getDescripcion());
         }
+        existingProduct.setOferta(productRequest.getOferta());
         if(productRequest.getNombre()!=null) {
             existingProduct.setNombre(productRequest.getNombre());
         }
@@ -78,6 +79,9 @@ public class ProductService {
         }
         if(productRequest.getColor()!=null){
             existingProduct.setColor(productRequest.getColor());
+        }
+        if(productRequest.getSexo()!=null){
+            existingProduct.setSexo(productRequest.getSexo());
         }
         if(productRequest.getMarca()!=null){
             existingProduct.setMarca(productRequest.getMarca());
@@ -92,6 +96,11 @@ public class ProductService {
         if(productRequest.getUtilidad()!=null){
             existingProduct.setUtilidad(productRequest.getUtilidad());
         }
+
+        if(productRequest.getImagen()!=null){
+            existingProduct.setImagen(productRequest.getImagen());
+        }
+
         return productRepository.save(existingProduct);
     }
 
