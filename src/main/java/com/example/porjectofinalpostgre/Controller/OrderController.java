@@ -43,7 +43,14 @@ public class OrderController  {
         return service.getOrderById(id);
     }
 
+    /*
+    @PutMapping("/{id}")
+    public OrdersDTO editOrder(@PathVariable String id, OrdersDTO orderRequest){
+        return service.editOrder(id,orderRequest);
+    }
 
+
+     */
     @DeleteMapping("/{id}")
     public String deleteOrder(@PathVariable("id") String id){
         return service.deleteOrder(id);
