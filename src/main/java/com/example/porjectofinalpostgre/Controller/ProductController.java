@@ -50,9 +50,9 @@ public class ProductController {
     public List<Product> findProductsUsingMarca(@PathVariable String marca){
         return service.getProductByMarca(marca);
     }
-    @PutMapping
-    public Product modifyProduct(@RequestBody Product product){
-        return service.updateProduct(product);
+    @PutMapping("/{productId}")
+    public Product modifyProduct(@PathVariable Integer productId,@RequestBody Product productRequest){
+        return service.updateProduct(productId,productRequest);
     }
 
     @DeleteMapping("/{productId}")

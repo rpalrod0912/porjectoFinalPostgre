@@ -58,19 +58,39 @@ public class ProductService {
     }
 
 
-    public Product updateProduct(Product productRequest){
+    public Product updateProduct(Integer productID, Product productRequest){
+
         //obtener docs de la DB
         //Dar valor de lar equisit al existete documento/entidad/objeto
-        Product existingProduct=productRepository.findByIdProduct(productRequest.getIdProduct());
-        existingProduct.setDescripcion(productRequest.getDescripcion());
-        existingProduct.setNombre(productRequest.getNombre());
-        existingProduct.setCategoria(productRequest.getCategoria());
-        existingProduct.setPrecio(productRequest.getPrecio());
-        existingProduct.setColor(productRequest.getColor());
-        existingProduct.setMarca(productRequest.getMarca());
-        existingProduct.setTalla(productRequest.getTalla());
-        existingProduct.setTipo(productRequest.getTipo());
-        existingProduct.setUtilidad(productRequest.getUtilidad());
+        Product existingProduct=productRepository.findByIdProduct(productID);
+        if(productRequest.getDescripcion()!=null){
+            existingProduct.setDescripcion(productRequest.getDescripcion());
+        }
+        if(productRequest.getNombre()!=null) {
+            existingProduct.setNombre(productRequest.getNombre());
+        }
+        if(productRequest.getCategoria()!=null){
+            existingProduct.setCategoria(productRequest.getCategoria());
+        }
+        if(productRequest.getPrecio()!=null){
+            existingProduct.setPrecio(productRequest.getPrecio());
+        }
+        if(productRequest.getColor()!=null){
+            existingProduct.setColor(productRequest.getColor());
+        }
+        if(productRequest.getMarca()!=null){
+            existingProduct.setMarca(productRequest.getMarca());
+        }
+        if(productRequest.getTalla()!=null){
+            existingProduct.setTalla(productRequest.getTalla());
+        }
+        if(productRequest.getTipo()!=null){
+            existingProduct.setTipo(productRequest.getTipo());
+
+        }
+        if(productRequest.getUtilidad()!=null){
+            existingProduct.setUtilidad(productRequest.getUtilidad());
+        }
         return productRepository.save(existingProduct);
     }
 

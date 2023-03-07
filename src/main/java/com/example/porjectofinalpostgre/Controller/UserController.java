@@ -1,6 +1,7 @@
 package com.example.porjectofinalpostgre.Controller;
 
 
+import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Entity.User;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
@@ -28,6 +29,29 @@ public class UserController {
     public User create(@RequestBody User user){
 
         return userRepository.save(user);
+    }
+
+
+    @PutMapping("/{idUser}")
+    public User editUser(@PathVariable String idUser,@RequestBody User userRequest){
+        User foundUser=userRepository.findByIdUser(idUser);
+
+
+        if(userRequest.getNombre()!=null){
+            foundUser.setNombre(userRequest.getNombre());
+        }
+        if(userRequest.getMail()!=null) {
+            foundUser.setMail(userRequest.getMail());
+        }
+        if(userRequest.getApellidos()!=null){
+            foundUser.setApellidos(userRequest.getApellidos());
+        }
+        if(userRequest.getPwd()!=null){
+            foundUser.setPwd(userRequest.getPwd());
+        }
+
+        return userRepository.save(foundUser);
+
     }
 
     @GetMapping
