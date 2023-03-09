@@ -6,21 +6,28 @@ import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
 import org.hamcrest.core.IsNull;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UpdateMethodsTests {
 
 
@@ -45,12 +52,33 @@ class UpdateMethodsTests {
     @Test
     void contextLoads() {
     }
+
+    private String token;
+    @BeforeAll
+    void getToken() throws Exception{
+        MvcResult result=this.mvc.perform(post("/token").with(httpBasic("rafapr0001@gmail.com","Rafapr_01")))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jwt = result.getResponse().getContentAsString();
+        this.token=jwt;
+    }
+
+    @Test
+    void rootWhenUnauthenticatedThen401() throws Exception {
+        this.mvc.perform(get("/"))
+                .andExpect(status().isUnauthorized());
+    }
     @Test
     void updateUserTest() throws Exception{
+
+        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+
         String testUser = "{\"nombre\":\"Juan\",\"apellidos\":\"Antonio\",\"mail\":\"juan01@gmail.com\",\"pwd\":\"miContraseña222\"}";
         String testUser2 = "{\"nombre\":\"Bartus\",\"mail\":\"bartusito@hotmail.com\"}";
 
         mvc.perform(put("/users/1")
+                .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(testUser))
                 .andExpect(status().isOk())
@@ -58,9 +86,10 @@ class UpdateMethodsTests {
                 .andExpect(jsonPath("$.nombre").value("Juan"))
                 .andExpect(jsonPath("$.apellidos").value("Antonio"))
                 .andExpect(jsonPath("$.mail").value("juan01@gmail.com"))
-                .andExpect(jsonPath("$.pwd").value("miContraseña222"));
+                .andExpect(jsonPath("$.pwd").value(encoder.matches("miContraseña222",userRepository.findByIdUser("1").getPwd())));
 
         mvc.perform(put("/users/2")
+                        .header("Authorization","Bearer "+token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testUser2))
                 .andExpect(status().isOk())
@@ -68,7 +97,7 @@ class UpdateMethodsTests {
                 .andExpect(jsonPath("$.nombre").value("Bartus"))
                 .andExpect(jsonPath("$.apellidos").value("Gonzalez"))
                 .andExpect(jsonPath("$.mail").value("bartusito@hotmail.com"))
-                .andExpect(jsonPath("$.pwd").value("kavla_01"));
+                .andExpect(jsonPath("$.pwd").value(userRepository.findByIdUser("2").getPwd()));
 
     }
 
@@ -95,7 +124,7 @@ class UpdateMethodsTests {
         tallaList2.add("S");
         tallaList2.add("L");
 
-        mvc.perform(put("/products/1").contentType(MediaType.APPLICATION_JSON).content(testProduct))
+        mvc.perform(put("/products/1").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testProduct))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.nombre").value("Zapatos Basicos"))
@@ -112,7 +141,7 @@ class UpdateMethodsTests {
                 .andExpect(jsonPath("$.imagen").value("ninguna"));
 
 
-        mvc.perform(put("/products/3").contentType(MediaType.APPLICATION_JSON).content(testProduct2))
+        mvc.perform(put("/products/3").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testProduct2))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.nombre").value("Camisa Negra"))

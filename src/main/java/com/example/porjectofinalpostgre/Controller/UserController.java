@@ -7,6 +7,7 @@ import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
 import com.example.porjectofinalpostgre.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user){
-
+        user.setPwd(new BCryptPasswordEncoder().encode(user.getPwd()));
         return userRepository.save(user);
     }
 
@@ -47,7 +48,7 @@ public class UserController {
             foundUser.setApellidos(userRequest.getApellidos());
         }
         if(userRequest.getPwd()!=null){
-            foundUser.setPwd(userRequest.getPwd());
+            foundUser.setPwd(new BCryptPasswordEncoder().encode(userRequest.getPwd()));
         }
 
         return userRepository.save(foundUser);
@@ -62,7 +63,7 @@ public class UserController {
 
     @GetMapping("/{idUser}")
     public Optional<User> getUserById(@PathVariable String idUser){
-        Optional<User> user=userRepository.findById(idUser);
+
         return userRepository.findById(idUser);
     }
     @DeleteMapping("/{idUser}")

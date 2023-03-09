@@ -6,18 +6,23 @@ import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
 import org.hamcrest.core.IsNull;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeleteMethodsTests {
 
 
@@ -42,6 +47,23 @@ class DeleteMethodsTests {
     @Test
     void contextLoads() {
 
+    }
+
+    private String token;
+    @BeforeAll
+    void getToken() throws Exception{
+        MvcResult result=this.mvc.perform(post("/token").with(httpBasic("rafapr0001@gmail.com","Rafapr_01")))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jwt = result.getResponse().getContentAsString();
+        this.token=jwt;
+    }
+
+    @Test
+    void rootWhenUnauthenticatedThen401() throws Exception {
+        this.mvc.perform(get("/"))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

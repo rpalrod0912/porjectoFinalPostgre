@@ -4,6 +4,7 @@ import com.example.porjectofinalpostgre.Controller.AuthController;
 import com.example.porjectofinalpostgre.Service.TokenService;
 import com.example.porjectofinalpostgre.security.SecurityConfig;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 
@@ -21,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.token.Token;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -34,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetMethodsTests {
 
 
@@ -70,9 +73,22 @@ class GetMethodsTests {
 	assert orderRepository.count()==4;
 	}
 
+	private String token;
+	@BeforeAll
+	void getToken() throws Exception{
+		MvcResult result=this.mvc.perform(post("/token").with(httpBasic("rafapr0001@gmail.com","Rafapr_01")))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		String jwt = result.getResponse().getContentAsString();
+		this.token=jwt;
+	}
+
 
 	@Test
 	void getAll() throws Exception{
+
+
 
 		MvcResult result=this.mvc.perform(post("/token").with(httpBasic("rafapr0001@gmail.com","Rafapr_01")))
 						.andExpect(status().isOk())
@@ -89,15 +105,15 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[0].nombre").value("Rafael"))
 				.andExpect(jsonPath("$[0].mail").value("rafapr0001@gmail.com"));
 
-		/*
-		mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
+
+		mvc.perform(get("/users").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[1].idUser").value(2))
 				.andExpect(jsonPath("$[1].nombre").value("Calvorota"))
 				.andExpect(jsonPath("$[1].mail").value("calvorota0001@gmail.com"));
 
-		mvc.perform(get("/products").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/products").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[2].nombre").value("New Balanace 550"))
@@ -106,7 +122,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[2].tipo").value("Zapatos"))
 		;
 
-		mvc.perform(get("/products").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/products").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[4].nombre").value("Chandal Nike Básico"))
@@ -115,7 +131,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[4].tipo").value("Sudadera"))
 		;
 
-		mvc.perform(get("/orders").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/orders").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[0].id").value(2))
@@ -131,7 +147,7 @@ class GetMethodsTests {
 		;
 
 
-		mvc.perform(get("/orders").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/orders").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[3].id").value(5))
@@ -146,20 +162,20 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[3].userid").value(1))
 
 				;
-	*/
+
 	}
 
 
 	@Test
 	void getById() throws Exception{
-		mvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/users/1").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.idUser").value(1))
 				.andExpect(jsonPath("$.nombre").value("Rafael"))
 				.andExpect(jsonPath("$.mail").value("rafapr0001@gmail.com"));
 
-		mvc.perform(get("/users/2").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/users/2").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.idUser").value(2))
@@ -167,7 +183,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$.mail").value("calvorota0001@gmail.com"));
 
 
-		mvc.perform(get("/products/3").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/products/3").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.nombre").value("New Balanace 550"))
@@ -176,7 +192,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$.tipo").value("Zapatos"))
 		;
 
-		mvc.perform(get("/products/5").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/products/5").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.nombre").value("Chandal Nike Básico"))
@@ -186,7 +202,7 @@ class GetMethodsTests {
 		;
 
 
-		mvc.perform(get("/orders/2").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/orders/2").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.id").value(2))
@@ -202,7 +218,7 @@ class GetMethodsTests {
 		;
 
 
-		mvc.perform(get("/orders/5").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get("/orders/5").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.id").value(5))

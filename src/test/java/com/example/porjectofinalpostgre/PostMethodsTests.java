@@ -7,22 +7,27 @@ import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
 import org.aspectj.lang.annotation.Before;
 import org.hamcrest.core.IsNull;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PostMethodsTests {
 
 
@@ -44,6 +49,23 @@ class PostMethodsTests {
     @Autowired
     UserController userController;
 
+    private String token;
+    @BeforeAll
+    void getToken() throws Exception{
+        MvcResult result=this.mvc.perform(post("/token").with(httpBasic("rafapr0001@gmail.com","Rafapr_01")))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jwt = result.getResponse().getContentAsString();
+        this.token=jwt;
+    }
+
+    @Test
+    void rootWhenUnauthenticatedThen401() throws Exception {
+        this.mvc.perform(get("/"))
+                .andExpect(status().isUnauthorized());
+    }
+
     @Test
     void addUsersTest() throws Exception{
         Long usersCount= userRepository.count();
@@ -52,7 +74,7 @@ class PostMethodsTests {
         String testUser2 = "{\"nombre\":\"Bartus\",\"apellidos\":\"bartusito\",\"mail\":\"bartusito@hotmail.com\",\"pwd\":\"aprobado321\"}";
 
 
-        mvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON).content(testUser))
+        mvc.perform(post("/users").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testUser))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.nombre").value("Juan"))
@@ -61,7 +83,7 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.pwd").value("miContraseña222"));
 
 
-        mvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON).content(testUser2))
+        mvc.perform(post("/users").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testUser2))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.nombre").value("Bartus"))
@@ -96,7 +118,7 @@ class PostMethodsTests {
         tallaList2.add("S");
         tallaList2.add("L");
 
-        mvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(testProduct))
+        mvc.perform(post("/products").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testProduct))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.nombre").value("Zapatos Basicos"))
@@ -113,7 +135,7 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.imagen").value("ninguna"));
 
 
-        mvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(testProduct2))
+        mvc.perform(post("/products").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testProduct2))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.nombre").value("Camisa Negra"))
@@ -160,7 +182,7 @@ class PostMethodsTests {
         quantityList2.add(5);
         quantityList2.add(2);
 
-        mvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON).content(testOrder))
+        mvc.perform(post("/orders").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testOrder))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(6))
@@ -169,7 +191,7 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.precioFinal").value(809.98))
                 .andExpect(jsonPath("$.userid.idUser").value(1));
 
-        mvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON).content(testOrder2))
+        mvc.perform(post("/orders").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testOrder2))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(7))
