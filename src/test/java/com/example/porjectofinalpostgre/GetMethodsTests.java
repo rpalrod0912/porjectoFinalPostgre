@@ -3,8 +3,10 @@ package com.example.porjectofinalpostgre;
 import com.example.porjectofinalpostgre.Controller.AuthController;
 import com.example.porjectofinalpostgre.Service.TokenService;
 import com.example.porjectofinalpostgre.security.SecurityConfig;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 
@@ -33,7 +35,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

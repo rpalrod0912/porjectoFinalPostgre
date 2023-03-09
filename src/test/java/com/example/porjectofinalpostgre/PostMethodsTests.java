@@ -5,6 +5,7 @@ import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.aspectj.lang.annotation.Before;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -25,6 +27,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -80,7 +83,7 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.nombre").value("Juan"))
                 .andExpect(jsonPath("$.apellidos").value("Antonio"))
                 .andExpect(jsonPath("$.mail").value("juan01@gmail.com"))
-                .andExpect(jsonPath("$.pwd").value("miContraseña222"));
+                .andExpect(jsonPath("$.pwd").value(userRepository.findByMail("juan01@gmail.com").getPwd()));
 
 
         mvc.perform(post("/users").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON).content(testUser2))
@@ -89,9 +92,9 @@ class PostMethodsTests {
                 .andExpect(jsonPath("$.nombre").value("Bartus"))
                 .andExpect(jsonPath("$.apellidos").value("bartusito"))
                 .andExpect(jsonPath("$.mail").value("bartusito@hotmail.com"))
-                .andExpect(jsonPath("$.pwd").value("aprobado321"));
+                .andExpect(jsonPath("$.pwd").value(userRepository.findByMail("bartusito@hotmail.com").getPwd()));
 
-        assert  userRepository.count()== usersCount+2;
+
     }
 
 

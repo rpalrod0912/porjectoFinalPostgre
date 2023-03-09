@@ -5,11 +5,13 @@ import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,7 +26,7 @@ import java.util.List;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -86,7 +88,7 @@ class UpdateMethodsTests {
                 .andExpect(jsonPath("$.nombre").value("Juan"))
                 .andExpect(jsonPath("$.apellidos").value("Antonio"))
                 .andExpect(jsonPath("$.mail").value("juan01@gmail.com"))
-                .andExpect(jsonPath("$.pwd").value(encoder.matches("miContraseña222",userRepository.findByIdUser("1").getPwd())));
+                .andExpect(jsonPath("$.pwd").value(userRepository.findByIdUser("1").getPwd()));
 
         mvc.perform(put("/users/2")
                         .header("Authorization","Bearer "+token)
