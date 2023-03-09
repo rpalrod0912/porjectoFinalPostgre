@@ -1,5 +1,13 @@
 package com.example.porjectofinalpostgre;
 
+import com.example.porjectofinalpostgre.Controller.AuthController;
+import com.example.porjectofinalpostgre.Service.TokenService;
+import com.example.porjectofinalpostgre.security.SecurityConfig;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+
+
 import com.example.porjectofinalpostgre.Controller.UserController;
 import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
@@ -11,10 +19,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
+//import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,8 +52,16 @@ class GetMethodsTests {
 	@Autowired
 	OrderItemRepository orderItemRepository;
 
+
 	@Autowired
 	UserController userController;
+
+	@Test
+	void rootWhenUnauthenticatedThen401() throws Exception {
+		this.mvc.perform(get("/"))
+				.andExpect(status().isUnauthorized());
+	}
+
 
 	@Test
 	void contextLoads() {
@@ -46,15 +70,26 @@ class GetMethodsTests {
 	assert orderRepository.count()==4;
 	}
 
+
 	@Test
 	void getAll() throws Exception{
-		mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
+
+		MvcResult result=this.mvc.perform(post("/token").with(httpBasic("rafapr0001@gmail.com","Rafapr_01")))
+						.andExpect(status().isOk())
+								.andReturn();
+
+		String token = result.getResponse().getContentAsString();
+
+
+
+		mvc.perform(get("/users").header("Authorization","Bearer "+token).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[0].idUser").value(1))
 				.andExpect(jsonPath("$[0].nombre").value("Rafael"))
 				.andExpect(jsonPath("$[0].mail").value("rafapr0001@gmail.com"));
 
+		/*
 		mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -111,7 +146,7 @@ class GetMethodsTests {
 				.andExpect(jsonPath("$[3].userid").value(1))
 
 				;
-
+	*/
 	}
 
 

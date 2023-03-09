@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 
@@ -23,6 +25,7 @@ public class User implements Serializable {
     private String nombre;
     @Column(name="apellidos")
     private String apellidos;
+
     @Column(name="mail")
     private String mail;
     @Column(name="pwd")
@@ -33,7 +36,7 @@ public class User implements Serializable {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.mail = mail;
-        this.pwd = pwd;
+        this.pwd = new BCryptPasswordEncoder().encode(pwd);
     }
 
 
