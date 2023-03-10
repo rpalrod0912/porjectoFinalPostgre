@@ -17,6 +17,6 @@ services:
       PGADMIN_DEFAULT_EMAIL: "farra@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "farra"
     ports:
-      - "80:80"
+      - "50:80"
     depends_on:
       - postgres
