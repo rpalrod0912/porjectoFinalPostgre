@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.32'
+
 	implementation group: 'net.minidev', name: 'json-smart', version: '2.4.8'
 	implementation group: 'net.minidev', name: 'asm', version: '1.0.2'
 	implementation 'org.springframework.security:spring-security-oauth2-resource-server:6.0.2'
