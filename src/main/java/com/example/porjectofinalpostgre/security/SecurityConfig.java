@@ -54,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfiguration {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.csrf(AbstractHttpConfigurer::disable)
+				.csrf(AbstractHttpConfigurer::disable).cors().and()
+
 				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
@@ -76,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
 				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.csrf(AbstractHttpConfigurer::disable)
-				.httpBasic(withDefaults())
+				.httpBasic(withDefaults()).cors().and()
 				.build();
 	}
 
@@ -93,16 +94,18 @@ public class SecurityConfig extends WebSecurityConfiguration {
 		return new NimbusJwtEncoder(jwks);
 	}
 
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(List.of("*"));
 		configuration.setAllowedHeaders(List.of("*"));
-		configuration.setAllowedMethods(List.of("GET"));
+		configuration.setAllowedMethods(List.of("GET","POST"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+
 
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
