@@ -66,6 +66,17 @@ public class UserController {
 
         return userRepository.findById(idUser);
     }
+
+    @GetMapping("/email/{mail}")
+    public  User getUserByMail(@PathVariable String mail){
+        return userRepository.findByMail(mail);
+    }
+
+    @GetMapping("/firebase/{firebaseId}")
+    public  User getUserByFirebase(@PathVariable String firebaseId){
+        return userRepository.findByFirebaseId(firebaseId);
+    }
+
     @DeleteMapping("/{idUser}")
     public String deleteUserById(@PathVariable String idUser){
 

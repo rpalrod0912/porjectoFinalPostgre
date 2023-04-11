@@ -215,9 +215,9 @@ public class Seeder implements CommandLineRunner {
         productRepository.save(p5);
         productRepository.save(p6);
 
-        User u1 = new User("Rafael", "Palomino", "rafapr0001@gmail.com", "Rafapr_01");
-        User u2 = new User("Calvorota","Gonzalez","calvorota0001@gmail.com","kavla_01");
-        User u3 = new User("javier","bartus","holajavi@gmail.com","suspenso_01");
+        User u1 = new User("Rafael", "Palomino", "rafapr0001@gmail.com", "Rafapr_01","vSQtJsLr8yPkUNHRUrxZzKZE5r83","321456789");
+        User u2 = new User("Calvorota","Gonzalez","calvorota0001@gmail.com","kavla_01","PsigA3ESjmhvZnBg8RQ8iRa3pYH3","656867215");
+        User u3 = new User("javier","bartus","holajavi@gmail.com","suspenso_01","yU3s5PLhVDWyjLEZvbgwUco9x363","456213908");
         userRepository.save(u1);
         userRepository.save(u2);
         userRepository.save(u3);

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
@@ -31,12 +30,19 @@ public class User implements Serializable {
     @Column(name="pwd")
     private String pwd;
 
+    @Column(name="firebaseId")
+    private String firebaseId;
+    @Column(name = "phone")
+    private String phone;
 
-    public User(String nombre, String apellidos, String mail, String pwd) {
+
+    public User(String nombre, String apellidos, String mail, String pwd,String firebaseId,String phone) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.mail = mail;
         this.pwd = new BCryptPasswordEncoder().encode(pwd);
+        this.firebaseId=firebaseId;
+        this.phone=phone;
     }
 
 
