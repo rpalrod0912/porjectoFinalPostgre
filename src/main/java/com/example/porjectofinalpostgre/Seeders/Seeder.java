@@ -1,4 +1,4 @@
-
+/*
 package com.example.porjectofinalpostgre.Seeders;
 
 import com.example.porjectofinalpostgre.Controller.OrderController;
@@ -305,4 +305,4 @@ public class Seeder implements CommandLineRunner {
 
     }
 }
-
+*/

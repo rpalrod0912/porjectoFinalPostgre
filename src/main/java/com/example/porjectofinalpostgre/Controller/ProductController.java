@@ -42,7 +42,7 @@ public class ProductController {
         return service.getProductByPrecio(precio);
     }
     @GetMapping("/nombre/{nombre}")
-    public  List<Product> findProductUsingNombre(@PathVariable String nombre){
+    public  Product findProductUsingNombre(@PathVariable String nombre){
         return service.getProductByNombre(nombre);
     }
 

@@ -53,7 +53,7 @@ public class ProductService {
         return productRepository.findByPrecio(precio);
     }
 
-    public  List<Product> getProductByNombre(String nombre){
+    public  Product getProductByNombre(String nombre){
         return productRepository.findByNombre(nombre);
     }
 
