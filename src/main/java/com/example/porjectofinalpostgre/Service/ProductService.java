@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 @Transactional
 @Service
@@ -57,7 +58,49 @@ public class ProductService {
         return productRepository.findByNombre(nombre);
     }
 
+    public List<Product> getProductsPage(String numPagina){
+        List<Product> products=this.getAllProducts();
+        List<String> numPaginas=this.getAllPages();
+        List<Product> productsPage=new ArrayList<Product>();
+        Integer cont=0;
+        for(String page : numPaginas){
+            if(page.equals(numPagina)){
 
+                   while (productsPage.size()<=10 && products.size()!=cont){
+                       productsPage.add(products.get(cont));
+                       cont++;
+
+
+                   }
+            }
+            //Suponiendo que se quieren mostrar 10 productos
+            cont+=11;
+        }
+        return productsPage;
+    }
+    public List<String> getAllPages(){
+        List<Product> products=this.getAllProducts();
+        List<String> listaPaginas=new ArrayList<String>();
+        Integer cont=0;
+        Integer numPag=1;
+        Integer contadorProducto=0;
+        for(Product product : products){
+            //Suponiendo que se quieren mostrar 10 productos
+            if(cont>=10){
+                listaPaginas.add(numPag.toString());
+                cont=0;
+                numPag++;
+            }
+            cont++;
+            contadorProducto++;
+            if(products.size()-contadorProducto==0){
+                listaPaginas.add(numPag.toString());
+                cont=0;
+                numPag++;
+            }
+        }
+        return listaPaginas;
+    }
 
     public Product updateProduct(Integer productID, Product productRequest){
 

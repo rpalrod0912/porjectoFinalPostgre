@@ -6,6 +6,7 @@ import com.example.porjectofinalpostgre.Entity.User;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,10 +47,23 @@ public class ProductController {
         return service.getProductByNombre(nombre);
     }
 
+    //Solo devuelvle las paginas existentes en la API no su contenido
+    @GetMapping("/paginas")
+    public List<String> findProductPages(){
+        return service.getAllPages();
+    }
+
+    //Devuelve el contenido de la pagina
+    @GetMapping("/paginas/{numPagina}")
+    public List<Product> getPageProducts(@PathVariable String numPagina){
+        return service.getProductsPage(numPagina);
+    }
     @GetMapping("marca/{marca}")
     public List<Product> findProductsUsingMarca(@PathVariable String marca){
         return service.getProductByMarca(marca);
     }
+
+
     @PutMapping("/{productId}")
     public Product modifyProduct(@PathVariable Integer productId,@RequestBody Product productRequest){
         return service.updateProduct(productId,productRequest);
