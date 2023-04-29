@@ -53,6 +53,24 @@ public class ProductController {
         return service.getAllPages();
     }
 
+    @GetMapping("/ofertas")
+        public List<Product> findProductsBySale(){
+            return service.getSales();
+        }
+
+    @GetMapping("/ofertas/paginas")
+    public List<String> findSalesPages(){
+
+            return service.getSalePages();
+
+    }
+
+    @GetMapping("/ofertas/paginas/{numPagina}")
+
+    public List<Product> getPagedSalesProds(@PathVariable String numPagina){
+        return  service.getSaleProductsPaged(numPagina);
+    }
+
     //Devuelve el contenido de la pagina
     @GetMapping("/paginas/{numPagina}")
     public List<Product> getPageProducts(@PathVariable String numPagina){

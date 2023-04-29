@@ -58,6 +58,16 @@ public class ProductService {
         return productRepository.findByNombre(nombre);
     }
 
+    public List<Product> getSales(){
+        List<Product> allProducts=getAllProducts();
+        List <Product> salesArr= new ArrayList<>();
+        for (Product product : allProducts){
+            if (product.getOferta()!=null){
+                salesArr.add(product);
+            }
+        }
+        return salesArr;
+    }
     public List<Product> getProductsPage(String numPagina){
         List<Product> products=this.getAllProducts();
         List<String> numPaginas=this.getAllPages();
@@ -78,6 +88,50 @@ public class ProductService {
         }
         return productsPage;
     }
+    public List<Product> getSaleProductsPaged(String numPagina){
+        List<Product> products=this.getSales();
+        List<String> numPaginas=this.getAllPages();
+        List<Product> productsPage=new ArrayList<Product>();
+        Integer cont=0;
+        for(String page : numPaginas){
+            if(page.equals(numPagina)){
+
+                while (productsPage.size()<=10 && products.size()!=cont){
+                    productsPage.add(products.get(cont));
+                    cont++;
+
+
+                }
+            }
+            //Suponiendo que se quieren mostrar 10 productos
+            cont+=11;
+        }
+        return productsPage;
+    }
+    public List<String> getSalePages(){
+        List <Product> products=this.getSales();
+        List<String> listaPaginas=new ArrayList<String>();
+        Integer cont=0;
+        Integer numPag=1;
+        Integer contadorProducto=0;
+        for(Product product : products){
+            //Suponiendo que se quieren mostrar 10 productos
+            if(cont>=10){
+                listaPaginas.add(numPag.toString());
+                cont=0;
+                numPag++;
+            }
+            cont++;
+            contadorProducto++;
+            if(products.size()-contadorProducto==0){
+                listaPaginas.add(numPag.toString());
+                cont=0;
+                numPag++;
+            }
+        }
+        return listaPaginas;
+    }
+
     public List<String> getAllPages(){
         List<Product> products=this.getAllProducts();
         List<String> listaPaginas=new ArrayList<String>();

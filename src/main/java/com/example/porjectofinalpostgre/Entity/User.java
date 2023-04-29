@@ -36,7 +36,8 @@ public class User implements Serializable {
     private String phone;
 
 
-    public User(String nombre, String apellidos, String mail, String pwd,String firebaseId,String phone) {
+    public User(String idUser,String nombre, String apellidos, String mail, String pwd,String firebaseId,String phone) {
+        this.idUser= Integer.valueOf(idUser);
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.mail = mail;

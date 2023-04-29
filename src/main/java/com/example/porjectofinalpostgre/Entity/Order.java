@@ -20,7 +20,7 @@ import java.util.Set;
 @Table(name = "orders")
 @Getter @Setter
 @NoArgsConstructor
-public class Order implements Serializable {
+public class  Order implements Serializable {
 
 
     /*ESTRUCTURA PARA ENVIAR JSON DE POST ORDER
