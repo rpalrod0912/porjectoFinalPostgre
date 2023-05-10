@@ -10,11 +10,8 @@ import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
 import com.example.porjectofinalpostgre.dto.OrdersDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -135,6 +132,30 @@ public class OrderService {
         return orderId+" pedido eliminadio de la API";
     }
 
+    public List<OrdersDTO> getOrderByUserId(User id){
+        List <OrdersDTO> listaEnviar =  new ArrayList<>();
+        List<Order> lista=orderRepository.getByUserid(id);
+        for (Order order: lista){
+            OrdersDTO newDto = new OrdersDTO();
+
+            newDto.setId(order.getId());
+            List <Integer> listaIdProd = new ArrayList<Integer>();
+            newDto.setUserid(order.getUserid().getIdUser().toString());
+            for (Product product : order.getProducts()){
+                listaIdProd.add(product.getIdProduct());
+            }
+            newDto.setUserid(order.getUserid().getIdUser().toString());
+            newDto.setOrderproducts(orderItemRepository.getAllByOrderId(order.getId().toString()));
+            newDto.setProducts(listaIdProd);
+            newDto.setQuantity(order.getQuantity());
+            newDto.setPrices(order.getPrices());
+            newDto.setTotalPrice(order.getPrecioFinal());
+            newDto.setTotalPrice(order.getPrecioFinal());
+            System.out.println(newDto);
+            listaEnviar.add(newDto);
+        }
+        return listaEnviar;
+    }
     public void deleteOrderByUserId(User userId){
         List<Order> listaOrdenes=orderRepository.deleteByUserid(userId);
        for (Order order : listaOrdenes){

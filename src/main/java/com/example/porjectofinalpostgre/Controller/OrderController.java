@@ -1,6 +1,7 @@
 package com.example.porjectofinalpostgre.Controller;
 
 import com.example.porjectofinalpostgre.Entity.Order;
+import com.example.porjectofinalpostgre.Entity.User;
 import com.example.porjectofinalpostgre.Service.OrderService;
 import com.example.porjectofinalpostgre.dto.OrdersDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,10 @@ public class OrderController  {
         return service.addOrder(order);
     }
 
-
+    @GetMapping("/user/{id}")
+    public List<OrdersDTO> getOrderByUserId(@PathVariable("id") User id){
+        return service.getOrderByUserId(id);
+    }
     @GetMapping
     public List<OrdersDTO> getOrders(){
         return service.getAllOrders();

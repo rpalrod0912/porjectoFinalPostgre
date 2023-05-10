@@ -35,8 +35,24 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name="direccion")
+    private String direccion;
 
-    public User(String idUser,String nombre, String apellidos, String mail, String pwd,String firebaseId,String phone) {
+    @Column(name="info")
+    private String info;
+    @Column(name="cp")
+    private String cp;
+
+    @Column(name="ciudad")
+    private String ciudad;
+
+    @Column(name = "provincia")
+    private String provincia;
+
+
+
+
+    public User(String idUser,String nombre, String apellidos, String mail, String pwd,String firebaseId,String phone,String direccion, String info, String cp, String ciudad, String provincia) {
         this.idUser= Integer.valueOf(idUser);
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -44,6 +60,14 @@ public class User implements Serializable {
         this.pwd = new BCryptPasswordEncoder().encode(pwd);
         this.firebaseId=firebaseId;
         this.phone=phone;
+
+        this.direccion=direccion;
+        this.info=info;
+        this.cp=cp;
+        this.ciudad=ciudad;
+        this.provincia=provincia;
+
+
     }
 
 
