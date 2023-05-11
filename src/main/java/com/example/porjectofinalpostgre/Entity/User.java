@@ -35,6 +35,12 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name="genero")
+    private String genero;
+
+    @Column(name="fechaNac")
+    private String fechaNac;
+
     @Column(name="direccion")
     private String direccion;
 

@@ -50,6 +50,30 @@ public class UserController {
         if(userRequest.getPwd()!=null){
             foundUser.setPwd(new BCryptPasswordEncoder().encode(userRequest.getPwd()));
         }
+        if(userRequest.getCp()!=null){
+            foundUser.setCp(userRequest.getCp());
+        }
+        if(userRequest.getCiudad()!=null) {
+            foundUser.setCiudad(userRequest.getCiudad());
+        }
+        if(userRequest.getProvincia()!=null){
+            foundUser.setProvincia(userRequest.getProvincia());
+        }
+        if(userRequest.getDireccion()!=null){
+            foundUser.setDireccion(userRequest.getDireccion());
+        }
+        if(userRequest.getFechaNac()!=null){
+            foundUser.setFechaNac(userRequest.getFechaNac());
+        }
+        if(userRequest.getGenero()!=null){
+            foundUser.setGenero(userRequest.getGenero());
+        }
+        if(userRequest.getInfo()!=null){
+            foundUser.setInfo(userRequest.getInfo());
+        }
+        if(userRequest.getPhone()!=null){
+            foundUser.setPhone(userRequest.getPhone());
+        }
 
         return userRepository.save(foundUser);
 
