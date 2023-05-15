@@ -18,6 +18,8 @@ public class CommentDTO implements Serializable {
     private String text;
 
 
+    private String userNameLastName;
+
     private String productId;
 
     private String userId;

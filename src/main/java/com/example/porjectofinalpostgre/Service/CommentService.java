@@ -58,6 +58,7 @@ public class CommentService {
         for (Comment comment : comments){
             CommentDTO commentDTO= new CommentDTO();
             commentDTO.setId(comment.getId());
+            commentDTO.setUserNameLastName(comment.getUserId().getNombre()+" "+comment.getUserId().getApellidos());
             commentDTO.setText(comment.getText());
             commentDTO.setProductId(String.valueOf(comment.getProductId().getIdProduct()));
             commentDTO.setUserId(String.valueOf(comment.getUserId().getIdUser()));

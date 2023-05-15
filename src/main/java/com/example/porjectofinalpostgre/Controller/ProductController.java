@@ -5,6 +5,7 @@ import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Entity.User;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.Service.ProductService;
+import com.example.porjectofinalpostgre.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class ProductController {
         return service.getProductByPrecio(precio);
     }
     @GetMapping("/nombre/{nombre}")
-    public  Product findProductUsingNombre(@PathVariable String nombre){
+    public ProductDTO findProductUsingNombre(@PathVariable String nombre){
         return service.getProductByNombre(nombre);
     }
 

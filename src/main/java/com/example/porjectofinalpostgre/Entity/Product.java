@@ -1,5 +1,6 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.example.porjectofinalpostgre.dto.CommentDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -75,7 +76,8 @@ public class Product implements Serializable {
             "id"))
     private List<String> talla;
 
-
+    @NotNull(message = "Tipo requerido")
+    @Basic(optional = false)
     private String imagen;
 
     @JsonBackReference

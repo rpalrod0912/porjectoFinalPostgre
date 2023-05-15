@@ -1,12 +1,15 @@
 package com.example.porjectofinalpostgre.Service;
 
 
+import com.example.porjectofinalpostgre.Entity.Comment;
 import com.example.porjectofinalpostgre.Entity.Order;
 import com.example.porjectofinalpostgre.Entity.OrderItem;
 import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
+import com.example.porjectofinalpostgre.dto.CommentDTO;
+import com.example.porjectofinalpostgre.dto.ProductDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +23,8 @@ import java.util.UUID;
 @Service
 public class ProductService {
 
-
+    @Autowired
+    private  CommentService commentService;
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -54,8 +58,25 @@ public class ProductService {
         return productRepository.findByPrecio(precio);
     }
 
-    public  Product getProductByNombre(String nombre){
-        return productRepository.findByNombre(nombre);
+    public  ProductDTO getProductByNombre(String nombre){
+
+        Product producto= productRepository.findByNombre(nombre);
+        ProductDTO productoDTO =new ProductDTO();
+        productoDTO.setIdProduct(producto.getIdProduct());
+        productoDTO.setImagen(producto.getImagen());
+        productoDTO.setDescripcion(producto.getDescripcion());
+        productoDTO.setColor(producto.getColor());
+        productoDTO.setMarca(producto.getMarca());
+        productoDTO.setSexo(producto.getSexo());
+        productoDTO.setOferta(producto.getOferta());
+        productoDTO.setPrecio(producto.getPrecio());
+        productoDTO.setNombre(producto.getNombre());
+        productoDTO.setCategoria(producto.getCategoria());
+        productoDTO.setTalla(producto.getTalla());
+        List<CommentDTO> comentariosProd = commentService.showCommentsByProduct(producto);
+        productoDTO.setComentarios(comentariosProd);
+
+        return productoDTO;
     }
 
     public List<Product> getSales(){
