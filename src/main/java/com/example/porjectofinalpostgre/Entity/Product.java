@@ -75,7 +75,21 @@ public class Product implements Serializable {
             "id"))
     private List<String> talla;
 
+
     private String imagen;
+
+
+    @OneToMany(mappedBy = "comments_products")
+    private List<Comment> comments_products;
+
+    /*
+
+    @OneToMany(targetEntity = User.class,cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="comment_id")
+    private List<String> comments = new ArrayList<>();
+
+*/
+
 
         /*
     @ManyToMany(mappedBy = "products")

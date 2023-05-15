@@ -32,6 +32,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
+     
 
     @PutMapping("/{idUser}")
     public User editUser(@PathVariable String idUser,@RequestBody User userRequest){

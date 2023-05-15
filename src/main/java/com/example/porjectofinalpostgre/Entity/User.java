@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Getter @Setter
@@ -55,9 +56,13 @@ public class User implements Serializable {
     @Column(name = "provincia")
     private String provincia;
 
-
-
-
+    @OneToMany(mappedBy = "userId_comments")
+    private List<Comment> userId_comments;
+    /*
+    @ManyToOne()
+    @JoinColumn(name="comment_id",insertable = true,updatable = false)
+    private Comment commentId;
+*/
     public User(String idUser,String nombre, String apellidos, String mail, String pwd,String firebaseId,String phone,String direccion, String info, String cp, String ciudad, String provincia) {
         this.idUser= Integer.valueOf(idUser);
         this.nombre = nombre;

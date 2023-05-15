@@ -63,6 +63,7 @@ public class  Order implements Serializable {
     private List<Double> prices;
 
 
+
     @Column(name = "preciototal")
     private Double precioFinal;
 
