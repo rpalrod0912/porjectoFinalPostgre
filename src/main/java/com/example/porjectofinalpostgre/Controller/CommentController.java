@@ -7,6 +7,7 @@ import com.example.porjectofinalpostgre.Repository.CommentRepository;
 import com.example.porjectofinalpostgre.Service.CommentService;
 import com.example.porjectofinalpostgre.Service.OrderService;
 import com.example.porjectofinalpostgre.dto.CommentDTO;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class CommentController {
     @GetMapping("/{productId}")
     public List<CommentDTO> getCommentsByProduct(@PathVariable Product productId){
         return commentService.showCommentsByProduct(productId);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public String deleteCommentByUserId(@PathVariable String commentId){
+        return  commentService.deleteById(commentId);
     }
 
     @PostMapping

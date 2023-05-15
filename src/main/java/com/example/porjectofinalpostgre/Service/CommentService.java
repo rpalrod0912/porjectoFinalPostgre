@@ -66,4 +66,9 @@ public class CommentService {
 
         return listaEnviar;
     }
+
+    public String deleteById(String commentId) {
+        commentRepository.deleteById(commentId);
+        return "COMENTARIO ELIMINADO";
+    }
 }

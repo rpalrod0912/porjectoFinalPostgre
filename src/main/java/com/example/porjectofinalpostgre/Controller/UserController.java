@@ -3,9 +3,12 @@ package com.example.porjectofinalpostgre.Controller;
 
 import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Entity.User;
+import com.example.porjectofinalpostgre.Repository.CommentRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
 import com.example.porjectofinalpostgre.Repository.UserRepository;
+import com.example.porjectofinalpostgre.Service.CommentService;
 import com.example.porjectofinalpostgre.Service.OrderService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CommentRepository commentRepository;
     @Autowired
     OrderService orderService;
 
@@ -31,6 +37,7 @@ public class UserController {
         user.setPwd(new BCryptPasswordEncoder().encode(user.getPwd()));
         return userRepository.save(user);
     }
+
 
      
 
@@ -106,6 +113,7 @@ public class UserController {
     public String deleteUserById(@PathVariable String idUser){
 
 
+        commentRepository.deleteByUserId(userRepository.findById(idUser).get());
         orderService.deleteOrderByUserId(userRepository.findById(idUser).get());
         userRepository.deleteById(idUser);
         return "El usuario "+idUser+" ha sido eliminado de la base de datos";
