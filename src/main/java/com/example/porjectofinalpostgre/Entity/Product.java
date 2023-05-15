@@ -78,8 +78,9 @@ public class Product implements Serializable {
 
     private String imagen;
 
+    @JsonBackReference
 
-    @OneToMany(mappedBy = "comments_products")
+    @OneToMany(mappedBy = "productId")
     private List<Comment> comments_products;
 
     /*

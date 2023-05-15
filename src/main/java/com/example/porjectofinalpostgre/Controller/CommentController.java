@@ -1,6 +1,7 @@
 package com.example.porjectofinalpostgre.Controller;
 
 import com.example.porjectofinalpostgre.Entity.Comment;
+import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Entity.User;
 import com.example.porjectofinalpostgre.Repository.CommentRepository;
 import com.example.porjectofinalpostgre.Service.CommentService;
@@ -17,6 +18,13 @@ import java.util.List;
 @RequestMapping("/comments")
 public class CommentController {
 
+    /*ESTRUCTURA POST
+    {
+    "text":"Este es un comentario",
+    "comments_products": 10,
+	"userId_comments":20
+}
+    */
 
     @Autowired
     private CommentService commentService;
@@ -24,9 +32,13 @@ public class CommentController {
     private CommentRepository commentRepository;
 
     @GetMapping
-    public List<Comment> getAllUsers(){
-        List<Comment> comments= commentRepository.findAll();
-        return comments;
+    public List<CommentDTO> getAllComments(){
+        return commentService.showAllComments();
+    }
+
+    @GetMapping("/{productId}")
+    public List<CommentDTO> getCommentsByProduct(@PathVariable Product productId){
+        return commentService.showCommentsByProduct(productId);
     }
 
     @PostMapping

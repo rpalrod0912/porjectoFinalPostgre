@@ -1,5 +1,6 @@
 package com.example.porjectofinalpostgre.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -56,8 +57,11 @@ public class User implements Serializable {
     @Column(name = "provincia")
     private String provincia;
 
-    @OneToMany(mappedBy = "userId_comments")
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "userId")
     private List<Comment> userId_comments;
+
     /*
     @ManyToOne()
     @JoinColumn(name="comment_id",insertable = true,updatable = false)
