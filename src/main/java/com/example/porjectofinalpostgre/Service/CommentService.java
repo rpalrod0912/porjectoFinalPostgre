@@ -26,10 +26,19 @@ public class CommentService {
 
 
     public CommentDTO createCommentDTO(CommentDTO comment) {
+        System.out.println(comment);
+
+        System.out.println(comment.getRating());
+        if(comment.getRating()>5){
+            comment.setRating(5);
+        }if(comment.getRating()<0){
+            comment.setRating(0);
+        }
             Comment originalComment= new Comment();
             originalComment.setText(comment.getText());
             originalComment.setUserId(userRepository.findByIdUser(comment.getUserId()));
             originalComment.setProductId(productRepository.findByIdProduct(Integer.valueOf(comment.getProductId())));
+            originalComment.setRating(comment.getRating());
         //originalComment.setText();
         //this.commentRepository.save(originalComment);
         commentRepository.save(originalComment);
@@ -46,6 +55,7 @@ public class CommentService {
             commentDTO.setText(comment.getText());
             commentDTO.setProductId(String.valueOf(comment.getProductId().getIdProduct()));
             commentDTO.setUserId(String.valueOf(comment.getUserId().getIdUser()));
+            commentDTO.setRating(comment.getRating());
             listaEnviar.add(commentDTO);
         }
         return listaEnviar;
@@ -62,6 +72,7 @@ public class CommentService {
             commentDTO.setText(comment.getText());
             commentDTO.setProductId(String.valueOf(comment.getProductId().getIdProduct()));
             commentDTO.setUserId(String.valueOf(comment.getUserId().getIdUser()));
+            commentDTO.setRating(comment.getRating());
             listaEnviar.add(commentDTO);
         }
 

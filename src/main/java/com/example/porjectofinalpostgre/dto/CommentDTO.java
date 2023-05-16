@@ -23,6 +23,8 @@ public class CommentDTO implements Serializable {
     private String productId;
 
     private String userId;
+
+    private Integer rating;
 /*
 
     public CommentDTO(String idComment,String text,String prodComments,String userComments

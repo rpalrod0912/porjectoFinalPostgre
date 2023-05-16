@@ -32,5 +32,7 @@ public class Comment implements Serializable {
     @JoinColumn
     private User userId;
 
+    @NotNull(message = "Puntuacion requerido")
+    private Integer rating;
 
 }
