@@ -46,9 +46,10 @@ public class ProductService {
     }
     public List<Product> getAllProducts(){
 
-        return productJdbc.find();
+        return productRepository.findAll();
 
     }
+
 
     public Product getProductById(Integer productId){
         System.out.println(productId);

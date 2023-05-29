@@ -44,7 +44,7 @@ public class  Order implements Serializable {
 
 
     @JsonBackReference
-    @ManyToMany(fetch = FetchType.LAY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "order_product",
             joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
