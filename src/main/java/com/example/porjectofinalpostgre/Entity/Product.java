@@ -82,7 +82,7 @@ public class Product implements Serializable {
 
     @JsonBackReference
 
-    @OneToMany(mappedBy = "productId")
+    @OneToMany(mappedBy = "productId",fetch = FetchType.LAZY)
     private List<Comment> comments_products;
 
     /*

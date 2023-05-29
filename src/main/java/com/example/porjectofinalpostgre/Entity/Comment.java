@@ -23,12 +23,12 @@ public class Comment implements Serializable {
 
     private String text;
     @NotNull(message = "Producto requerida")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Product productId;
 
     @NotNull(message = "Usuario requerido")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private User userId;
 

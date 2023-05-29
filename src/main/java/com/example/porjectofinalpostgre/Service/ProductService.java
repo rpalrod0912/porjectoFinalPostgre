@@ -7,6 +7,8 @@ import com.example.porjectofinalpostgre.Entity.OrderItem;
 import com.example.porjectofinalpostgre.Entity.Product;
 import com.example.porjectofinalpostgre.Repository.OrderItemRepository;
 import com.example.porjectofinalpostgre.Repository.OrderRepository;
+
+import com.example.porjectofinalpostgre.Repository.ProductJdbcTemplateDao;
 import com.example.porjectofinalpostgre.Repository.ProductRepository;
 import com.example.porjectofinalpostgre.dto.CommentDTO;
 import com.example.porjectofinalpostgre.dto.ProductDTO;
@@ -23,6 +25,8 @@ import java.util.UUID;
 @Service
 public class ProductService {
 
+    @Autowired
+    private ProductJdbcTemplateDao productJdbc;
     @Autowired
     private  CommentService commentService;
     @Autowired
@@ -41,7 +45,8 @@ public class ProductService {
         return productRepository.save(product);
     }
     public List<Product> getAllProducts(){
-        return productRepository.findAll();
+
+        return productJdbc.find();
 
     }
 

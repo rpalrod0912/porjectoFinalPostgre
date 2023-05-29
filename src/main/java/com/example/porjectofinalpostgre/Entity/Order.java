@@ -37,14 +37,14 @@ public class  Order implements Serializable {
 
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",referencedColumnName = "idUser", nullable = false)
     private User userid;
 
 
 
     @JsonBackReference
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAY)
     @JoinTable(
             name = "order_product",
             joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),

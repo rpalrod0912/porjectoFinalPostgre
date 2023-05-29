@@ -59,7 +59,7 @@ public class User implements Serializable {
 
 
     @JsonBackReference
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY)
     private List<Comment> userId_comments;
 
     /*
