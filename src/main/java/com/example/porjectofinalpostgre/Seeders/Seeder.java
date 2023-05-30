@@ -1,4 +1,4 @@
-/*
+
 package com.example.porjectofinalpostgre.Seeders;
 
 import com.example.porjectofinalpostgre.Controller.OrderController;
@@ -117,7 +117,7 @@ public class Seeder implements CommandLineRunner {
         tallasp5.add("XL");
 
 
-
+/*
         Product p1 = new Product(
                 "Air Force 1",
                 10.0f,
@@ -214,14 +214,16 @@ public class Seeder implements CommandLineRunner {
         productRepository.save(p4);
         productRepository.save(p5);
         productRepository.save(p6);
+*/
+        User u1 = new User();
+        u1.setNombre("Rafael");
+        u1.setApellidos("Palomino");
+        u1.setMail("rafapr0001@gmail.com");
+        u1.setPwd("Rafapr_01");
 
-        User u1 = new User("Rafael", "Palomino", "rafapr0001@gmail.com", "Rafapr_01","vSQtJsLr8yPkUNHRUrxZzKZE5r83","321456789");
-        User u2 = new User("Calvorota","Gonzalez","calvorota0001@gmail.com","kavla_01","PsigA3ESjmhvZnBg8RQ8iRa3pYH3","656867215");
-        User u3 = new User("javier","bartus","holajavi@gmail.com","suspenso_01","yU3s5PLhVDWyjLEZvbgwUco9x363","456213908");
         userRepository.save(u1);
-        userRepository.save(u2);
-        userRepository.save(u3);
 
+/*
         List<Integer> productso1= new ArrayList<>();
         productso1.add(p1.getIdProduct());
         productso1.add(p4.getIdProduct());
@@ -302,8 +304,7 @@ public class Seeder implements CommandLineRunner {
 
         orderController.deleteOrder("1");
 
-
+*/
     }
 }
 
-*/

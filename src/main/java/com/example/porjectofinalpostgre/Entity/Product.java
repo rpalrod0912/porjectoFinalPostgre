@@ -37,9 +37,12 @@ public class Product implements Serializable {
 
     private Float oferta;
 
+    //!--Lob produces slow change
+    //@Lob
 
-    @Lob
+
     @NotNull(message = "Descripción de producto requerido")
+    @Column(length = 500)
     private String descripcion;
 
     @NotNull(message = "precio requerido")
