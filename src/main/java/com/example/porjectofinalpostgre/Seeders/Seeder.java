@@ -1,4 +1,4 @@
-
+/*
 package com.example.porjectofinalpostgre.Seeders;
 
 import com.example.porjectofinalpostgre.Controller.OrderController;
@@ -215,18 +215,15 @@ public class Seeder implements CommandLineRunner {
         productRepository.save(p4);
         productRepository.save(p5);
         productRepository.save(p6);
-*/
-        /*
-
-        User u1 = new User();
+  User u1 = new User();
         u1.setNombre("Rafael");
         u1.setApellidos("Palomino");
         u1.setMail("holajavi@gmail.com");
         u1.setPwd(new BCryptPasswordEncoder().encode("suspenso_01"));
 
         userRepository.save(u1);
-*/
-/*
+
+
         List<Integer> productso1= new ArrayList<>();
         productso1.add(p1.getIdProduct());
         productso1.add(p4.getIdProduct());
@@ -307,7 +304,12 @@ public class Seeder implements CommandLineRunner {
 
         orderController.deleteOrder("1");
 
+
+
 */
+
+
+
     }
 }
 
