@@ -13,6 +13,7 @@ import com.example.porjectofinalpostgre.dto.OrdersDTO;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -215,11 +216,12 @@ public class Seeder implements CommandLineRunner {
         productRepository.save(p5);
         productRepository.save(p6);
 */
+
         User u1 = new User();
         u1.setNombre("Rafael");
         u1.setApellidos("Palomino");
-        u1.setMail("rafapr0001@gmail.com");
-        u1.setPwd("Rafapr_01");
+        u1.setMail("holajavi@gmail.com");
+        u1.setPwd(new BCryptPasswordEncoder().encode("suspenso_01"));
 
         userRepository.save(u1);
 
