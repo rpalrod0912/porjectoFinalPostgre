@@ -216,6 +216,7 @@ public class Seeder implements CommandLineRunner {
         productRepository.save(p5);
         productRepository.save(p6);
 */
+        /*
 
         User u1 = new User();
         u1.setNombre("Rafael");
@@ -224,7 +225,7 @@ public class Seeder implements CommandLineRunner {
         u1.setPwd(new BCryptPasswordEncoder().encode("suspenso_01"));
 
         userRepository.save(u1);
-
+*/
 /*
         List<Integer> productso1= new ArrayList<>();
         productso1.add(p1.getIdProduct());
