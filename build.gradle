@@ -7,14 +7,16 @@ plugins {
 
 jar {
 	enabled = true
-	baseName 'app'
-/*
+	baseName 'abc'
+
 	manifest {
 		attributes(
-				'Main-Class':'com.example.porjectofinalpostgre.PorjectoFinalPostgreApplication'
+				//'Main-Class':'com.example.porjectofinalpostgre.PorjectoFinalPostgreApplication'
+				'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+    		  'Main-Class': 'com.example.porjectofinalpostgre.PorjectoFinalPostgreApplication'
 		)
 	}
-*/
+
 
 }
 
