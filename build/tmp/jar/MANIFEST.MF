@@ -4,8 +4,6 @@ Implementation-Title: clases-spring-22-23
 Implementation-Version: 1.0
 Main-Class: com.example.porjectofinalpostgre.PorjectoFinalPostgreApplica
  tion
-Start-Class: com.example.porjectofinalpostgre.PorjectoFinalPostgreApplic
- ation
 Spring-Boot-Version: 3.0.2
 Spring-Boot-Classes: BOOT-INF/classes/
 Spring-Boot-Lib: BOOT-INF/lib/
