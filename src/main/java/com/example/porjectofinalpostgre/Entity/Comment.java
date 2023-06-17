@@ -21,7 +21,7 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 1000)
+    @Column(length = 3000)
     private String text;
 
     @NotNull(message = "Producto requerida")
